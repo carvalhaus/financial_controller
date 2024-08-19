@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "This is the backend service for the Financial Tracker application, designed to manage and track user financial transactions efficiently. The backend is built with Node.js and Express, leveraging a PostgreSQL database. It provides a RESTful API for creating and managing income and expense entries, viewing transaction history, calculating real-time balances, setting spending limits, and triggering alerts based on user-defined thresholds.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carvalhaus/financial_controller.git"
+  },
+  "author": "João Pedro de Carvalho Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carvalhaus/financial_controller/issues"
+  },
+  "homepage": "https://github.com/carvalhaus/financial_controller#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
