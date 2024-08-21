@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { IconMenu2 } from "@tabler/icons-react";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 
