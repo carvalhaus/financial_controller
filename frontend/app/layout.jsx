@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="Portuguese" />
       </Head>
-      <body className={roboto.className}>{children}</body>
+      <body className={`${roboto.className} text-primary`}>{children}</body>
     </html>
   );
 }
