@@ -7,7 +7,7 @@ function Header() {
     return (
         <header className="h-[68px] shadow-lg flex items-center justify-between  px-5 md:px-10 py-3 bg-white">
             <Link href="/">
-                <Image src="/Logo.svg" width={164} height={44} alt="Treasure logo" />
+                <Image src="/Logo.svg" width={164} height={44} alt="Treasure logo" priority={true} />
             </Link>
 
             <div className=" hidden md:flex justify-end items-center gap-14 w-[480px]">

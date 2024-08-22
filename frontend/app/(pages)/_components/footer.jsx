@@ -16,7 +16,7 @@ function Footer() {
                     </ul>
 
                     <Link href="/">
-                        <Image src="/Logo.svg" width={246} height={66} alt="Treasure logo" className="min-w-60" />
+                        <Image src="/Logo.svg" width={246} height={66} alt="Treasure logo" className="w-auto h-auto min-w-60" />
                     </Link>
 
                     <ul className="hidden md:flex md:flex-col lg:flex-row lg:gap-10">
@@ -37,7 +37,7 @@ function Footer() {
                 </div >
             </div >
 
-            <small className="hover:text-softBlue"> <Link href="#">© 2024 Política de Privacidade</Link></small>
+            <small className="text-sm font-medium leading-none hover:text-softBlue"> <Link href="#">© 2024 Política de Privacidade</Link></small>
         </footer >
     );
 }

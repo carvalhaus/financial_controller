@@ -1,5 +1,11 @@
+import SloganSection from "./_components/slogan";
+
 function Homepage() {
-    return (<h1 className="flex-1">HALLO</h1>);
+    return (
+        <main className="flex-1 p-4">
+            <SloganSection />
+        </main>
+    );
 }
 
 export default Homepage;
