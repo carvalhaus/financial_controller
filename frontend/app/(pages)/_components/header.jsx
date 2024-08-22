@@ -18,7 +18,7 @@ function Header() {
                     <li className="hover:text-softBlue"><Link href="#">Fale conosco</Link></li>
                 </ul>
 
-                <Link href="#"><Button variant="outline" className="w-24">Login</Button></Link>
+                <Link href="login"><Button variant="outline" className="w-24">Logar</Button></Link>
             </div>
 
             <HeaderMenu />

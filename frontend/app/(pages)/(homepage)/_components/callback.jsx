@@ -9,8 +9,8 @@ function CallbackSection() {
                 <p className="leading-7">Registre-se ou entre em contato conosco</p>
             </div>
             <div className="flex flex-col md:flex-row gap-8">
-                <Button className="text-lg w-52"><Link href="#">Comece aqui</Link></Button>
-                <Button variant="outline" className="text-lg w-52"><Link href="#">Fale conosco</Link></Button>
+                <Link href="login"><Button className="text-lg w-52">Comece aqui</Button></Link>
+                <Link href="#"><Button variant="outline" className="text-lg w-52">Fale conosco</Button></Link>
             </div>
         </section>
     );
