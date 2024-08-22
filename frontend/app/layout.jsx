@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <Head>
         <meta name="title" content="Treasure - Controle suas Finanças com Facilidade" />
         <meta name="description" content="Treasure é um aplicativo de controle financeiro projetado para ajudar os usuários a gerenciar suas finanças de forma eficaz e segura." />
