@@ -13,7 +13,7 @@ function SummarySection() {
                 </ul>
             </div>
 
-            <Image src="/dashboard.png" width={480} height={341} alt="Foto do dashboard" className="border border-1 border-primary rounded-lg" />
+            <Image src="/dashboard.png" width={480} height={341} alt="Foto do dashboard" className="border border-1 border-primary rounded-lg hover:scale-125 ease-in-out duration-700" />
         </section>
     );
 }
