@@ -14,7 +14,7 @@ function Header() {
                 <ul className="flex justify-between w-full">
                     <li className="hover:text-softBlue"><Link href="/">Home</Link></li>
                     <li className="hover:text-softBlue"><Link href="#">Serviços</Link></li>
-                    <li className="hover:text-softBlue"><Link href="#">Quem somos</Link></li>
+                    <li className="hover:text-softBlue"><Link href="#">Sobre nós</Link></li>
                     <li className="hover:text-softBlue"><Link href="#">Fale conosco</Link></li>
                 </ul>
 

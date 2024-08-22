@@ -13,7 +13,7 @@ function HeaderMenu() {
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
-                    <SheetTitle>
+                    <SheetTitle className="text-center">
                         <Button className="w-10/12 text-lg">
                             <Link href="#">Login</Link>
                         </Button>
@@ -23,7 +23,9 @@ function HeaderMenu() {
                 <ul className="flex flex-col items-center mt-10 justify-between gap-5">
                     <li className="text-xl"><Link href="/">Home</Link></li>
                     <li className="text-xl"><Link href="#">Serviços</Link></li>
-                    <li className="text-xl"><Link href="#">Quem somos</Link></li>
+                    <li className="text-xl"><Link href="#">Recursos</Link></li>
+                    <li className="text-xl"><Link href="#">Sobre nós</Link></li>
+                    <li className="text-xl"><Link href="#">Blog</Link></li>
                     <li className="text-xl"><Link href="#">Fale conosco</Link></li>
                 </ul>
             </SheetContent >
