@@ -4,7 +4,7 @@ import Footer from "./_components/footer";
 
 function WebPageLayout() {
     return (
-        <div className="flex flex-col w-screen h-screen">
+        <div className="flex flex-col w-full h-full">
             <Header />
             <Homepage />
             <Footer />
