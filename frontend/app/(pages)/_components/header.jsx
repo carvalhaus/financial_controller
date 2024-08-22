@@ -5,7 +5,7 @@ import HeaderMenu from "./headerMenu";
 
 function Header() {
     return (
-        <header className="h-[68px] shadow-lg flex items-center justify-between  px-5 md:px-10 py-3 bg-white">
+        <header className="h-[68px] shadow-lg flex items-center justify-between  px-5 md:px-20 py-3 bg-white">
             <Link href="/">
                 <Image src="/Logo.svg" width={164} height={44} alt="Treasure logo" priority={true} />
             </Link>
