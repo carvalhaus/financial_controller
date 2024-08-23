@@ -18,6 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        softGray: "#E2E8F0",
         softBlue: "#3F6C99",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
