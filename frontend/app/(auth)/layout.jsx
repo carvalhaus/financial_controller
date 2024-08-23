@@ -44,7 +44,7 @@ function AuthLayout({ children }) {
                             </p>
                         </div>
 
-                        <div className="flex flex-col items-center gap-6 bg-white px-4 py-7 lg:py-14 rounded-lg">
+                        <div className="flex flex-col items-center gap-6 bg-white shadow-lg px-4 py-7 lg:py-14 rounded-lg">
                             <Link href="/" className="hidden lg:block">
                                 <Image src="/Logo.svg" width={238} height={66} alt="Logo" />
                             </Link>
