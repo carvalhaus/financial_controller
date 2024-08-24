@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 function DashboardLayout({ children }) {
     return (
         <div className="flex w-svw h-svh">
-            <aside className="w-56 flex flex-col items-center py-5 gap-10">
+            <aside className="w-56 flex flex-col items-center py-5 px-4 gap-10">
                 <Link href="/">
                     <Image src="/Logo.svg" width={164} height={46} alt="Treasure logo" priority={true} />
                 </Link>
