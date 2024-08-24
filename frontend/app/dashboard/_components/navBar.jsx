@@ -1,6 +1,44 @@
+"use client"
+
+import Image from "next/image";
+import Link from "next/link";
+
+const { NavigationMenu, NavigationMenuList, NavigationMenuItem } = require("@/components/ui/navigation-menu");
+
+const navItems = [
+    {
+        title: "Dashboard",
+        icon: "/iconDashboard.svg",
+        href: "#"
+    },
+    {
+        title: "Categorias",
+        icon: "/iconCategories.svg",
+        href: "#"
+    },
+    {
+        title: "Despesas",
+        icon: "/iconExpenses.svg",
+        href: "#"
+    }
+]
+
 function NavBar() {
     return (
-        <nav className="flex-1">OPTIONS</nav>
+        <NavigationMenu className="items-start">
+            <NavigationMenuList className="flex-col gap-3 w-48" >
+                {
+                    navItems.map((item, index) => (
+                        <Link key={index} href={item.href} className="w-full">
+                            <NavigationMenuItem className="flex items-center gap-2 px-[6px] py-2 hover:bg-accent hover:rounded-sm">
+                                <Image src={item.icon} width={32} height={32} alt="Item ícone" />
+                                <p className="text-2xl font-medium">{item.title}</p>
+                            </NavigationMenuItem>
+                        </Link>
+                    ))
+                }
+            </NavigationMenuList>
+        </NavigationMenu >
     );
 }
 
