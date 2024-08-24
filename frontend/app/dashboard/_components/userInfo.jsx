@@ -15,7 +15,7 @@ const userData = {
 function UserInfo() {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-2 focus-visible:outline-none">
+            <DropdownMenuTrigger className="flex items-center w-full px-[6px] gap-2 focus-visible:outline-none">
                 <Avatar>
                     <AvatarFallback className="bg-softGray">{userData.name[0]}</AvatarFallback>
                 </Avatar>
