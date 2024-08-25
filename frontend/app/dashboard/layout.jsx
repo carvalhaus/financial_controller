@@ -19,7 +19,7 @@ function DashboardLayout({ children }) {
                 <FriendInvitation />
             </aside>
 
-            <div className="flex-1 bg-red-50">
+            <div className="flex-1">
                 {children}
             </div>
         </div>

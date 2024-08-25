@@ -1,5 +1,12 @@
+import DashboardsHeader from "../_components/dashboardsHeader";
+
 function MainDashboard() {
-    return (<h1>MAIN</h1>);
+    return (
+        <div>
+            <DashboardsHeader title={"Ola, Johan"} subtitle={"Vamos controlar suas despesas?"} />
+            <h1 className="bg-red-50">MAIN</h1>
+        </div>
+    );
 }
 
 export default MainDashboard;
