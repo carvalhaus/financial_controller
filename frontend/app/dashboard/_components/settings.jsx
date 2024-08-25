@@ -120,7 +120,7 @@ function SettingsModal({ userData }) {
                     />
 
                     <DialogClose asChild>
-                        <Button className="w-full">Entrar</Button>
+                        <Button className="w-full text-lg">Salvar</Button>
                     </DialogClose>
                 </form>
             </Form>
