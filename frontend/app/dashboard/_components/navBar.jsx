@@ -9,17 +9,17 @@ const navItems = [
     {
         title: "Dashboard",
         icon: "/iconDashboard.svg",
-        href: "#"
+        href: "dashboard"
     },
     {
         title: "Categorias",
         icon: "/iconCategories.svg",
-        href: "#"
+        href: "dashboard/categories"
     },
     {
         title: "Despesas",
         icon: "/iconExpenses.svg",
-        href: "#"
+        href: "dashboard/expenses"
     }
 ]
 
