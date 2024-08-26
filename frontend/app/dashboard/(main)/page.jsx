@@ -1,4 +1,6 @@
 import DashboardsHeader from "../_components/dashboardsHeader";
+import ActivitiesSection from "./_components/activitiesSection";
+
 import SummarySection from "./_components/summarySection";
 
 function MainDashboard() {
@@ -9,6 +11,7 @@ function MainDashboard() {
 
                 <SummarySection />
 
+                <ActivitiesSection />
                 <div>1</div>
             </div>
         </div>
