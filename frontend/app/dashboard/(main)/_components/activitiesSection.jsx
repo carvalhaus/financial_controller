@@ -1,15 +1,14 @@
 import ExpensesChart from "./expensesChart";
 import LastCategories from "./lastCategories";
 
-
 function ActivitiesSection() {
-    return (
-        <section className="flex gap-10">
-            <ExpensesChart />
+  return (
+    <section className="flex justify-evenly max-h-[454px]">
+      <ExpensesChart />
 
-            <LastCategories />
-        </section>
-    );
+      <LastCategories />
+    </section>
+  );
 }
 
 export default ActivitiesSection;
