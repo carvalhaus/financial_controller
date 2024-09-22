@@ -1,3 +1,5 @@
+"use client";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -9,53 +11,122 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import edit from "@/public/edit.svg";
+import trash from "@/public/trash-x.svg";
+import Image from "next/image";
+import { useParams } from "next/navigation";
 
-const invoices = [
+const expenses = [
   {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
+    id: 1,
+    name: "Supermercado",
+    amount: 250.5,
+    category: "Alimentação",
+    date: "2024-09-15",
   },
   {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
+    id: 2,
+    name: "Academia",
+    amount: 100.0,
+    category: "Saúde",
+    date: "2024-09-01",
   },
   {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
+    id: 3,
+    name: "Conta de Luz",
+    amount: 150.75,
+    category: "Utilidades",
+    date: "2024-09-10",
   },
   {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
+    id: 4,
+    name: "Gasolina",
+    amount: 120.0,
+    category: "Transporte",
+    date: "2024-09-12",
   },
   {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
+    id: 5,
+    name: "Assinatura Netflix",
+    amount: 39.9,
+    category: "Entretenimento",
+    date: "2024-09-05",
   },
   {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
+    id: 6,
+    name: "Jantar Restaurante",
+    amount: 85.0,
+    category: "Alimentação",
+    date: "2024-09-08",
   },
   {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
+    id: 7,
+    name: "Medicamentos",
+    amount: 60.25,
+    category: "Saúde",
+    date: "2024-09-14",
+  },
+  {
+    id: 8,
+    name: "Aluguel",
+    amount: 1200.0,
+    category: "Moradia",
+    date: "2024-09-01",
+  },
+  {
+    id: 9,
+    name: "Internet",
+    amount: 99.9,
+    category: "Utilidades",
+    date: "2024-09-02",
+  },
+  {
+    id: 10,
+    name: "Cinema",
+    amount: 45.0,
+    category: "Entretenimento",
+    date: "2024-09-07",
+  },
+  {
+    id: 11,
+    name: "Manutenção do Carro",
+    amount: 350.0,
+    category: "Transporte",
+    date: "2024-09-11",
+  },
+  {
+    id: 12,
+    name: "Roupas",
+    amount: 200.0,
+    category: "Vestuário",
+    date: "2024-09-13",
+  },
+  {
+    id: 13,
+    name: "Plano de Saúde",
+    amount: 450.0,
+    category: "Saúde",
+    date: "2024-09-03",
+  },
+  {
+    id: 14,
+    name: "Café da manhã",
+    amount: 15.5,
+    category: "Alimentação",
+    date: "2024-09-04",
+  },
+  {
+    id: 15,
+    name: "Material de Escritório",
+    amount: 35.0,
+    category: "Trabalho",
+    date: "2024-09-06",
   },
 ];
 
 export function ExpensesTable() {
+  const params = useParams();
+
   return (
     <div className="flex flex-col items-center justify-center pt-5">
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-3">
@@ -63,34 +134,44 @@ export function ExpensesTable() {
       </h3>
 
       <ScrollArea className="w-full h-60 rounded-md">
-        <Table className="bg-white border border-softGray rounded-md drop-shadow pointer-events-none">
-          <TableCaption>A list of your recent invoices.</TableCaption>
-          <TableHeader>
+        <Table className="bg-white border border-softGray rounded-md drop-shadow pointer-events-none text-center">
+          <TableHeader className="">
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead className="text-primary text-base text-center">
+                Nome
+              </TableHead>
+              <TableHead className="text-primary text-base w-28 text-center">
+                Valor
+              </TableHead>
+              <TableHead className="text-primary text-base w-44 text-center">
+                Categoria
+              </TableHead>
+              <TableHead className="text-primary text-base w-28 text-center">
+                Data
+              </TableHead>
+              {params.slug && (
+                <TableHead className="text-primary text-base w-28 text-center">
+                  Ações
+                </TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                <TableCell>{invoice.paymentStatus}</TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="text-right">
-                  {invoice.totalAmount}
-                </TableCell>
+            {expenses.map((expense) => (
+              <TableRow key={expense.id}>
+                <TableCell>{expense.name}</TableCell>
+                <TableCell>{expense.amount}</TableCell>
+                <TableCell>{expense.category}</TableCell>
+                <TableCell>{expense.date}</TableCell>
+                {params.slug && (
+                  <TableCell className="flex items-center justify-center gap-3">
+                    <Image src={edit} />
+                    <Image src={trash} />
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">$2,500.00</TableCell>
-            </TableRow>
-          </TableFooter>
         </Table>
       </ScrollArea>
     </div>
