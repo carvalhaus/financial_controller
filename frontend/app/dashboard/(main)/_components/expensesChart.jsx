@@ -59,13 +59,13 @@ function ExpensesChart() {
           <Bar
             dataKey="desktop"
             stackId="a"
-            fill="var(--color-desktop)"
+            fill="#0381FF"
             radius={[0, 0, 4, 4]}
           />
           <Bar
             dataKey="mobile"
             stackId="a"
-            fill="var(--color-mobile)"
+            fill="#C1DFFE"
             radius={[4, 4, 0, 0]}
           />
         </BarChart>
