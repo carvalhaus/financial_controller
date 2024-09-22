@@ -1,20 +1,16 @@
-"use client";
-
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import edit from "@/public/edit.svg";
+
 import trash from "@/public/trash-x.svg";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import EditExpense from "./editExpense";
+import DeleteExpense from "./deleteExpense";
 
 const expenses = [
   {
@@ -124,56 +120,47 @@ const expenses = [
   },
 ];
 
-export function ExpensesTable() {
-  const params = useParams();
-
+export function ExpensesTable({ pathname }) {
   return (
-    <div className="flex flex-col items-center justify-center pt-5">
-      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-3">
-        Últimos lançamentos
-      </h3>
+    <Table className="bg-white border border-softGray rounded-md drop-shadow pointer-events-none text-center pointer-events-auto">
+      <TableHeader className="">
+        <TableRow>
+          <TableHead className="text-primary text-base text-center">
+            Nome
+          </TableHead>
+          <TableHead className="text-primary text-base w-28 text-center">
+            Valor
+          </TableHead>
+          <TableHead className="text-primary text-base w-44 text-center">
+            Categoria
+          </TableHead>
+          <TableHead className="text-primary text-base w-28 text-center">
+            Data
+          </TableHead>
+          {pathname !== "/dashboard" && (
+            <TableHead className="text-primary text-base w-28 text-center">
+              Ações
+            </TableHead>
+          )}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {expenses.map((expense) => (
+          <TableRow key={expense.id}>
+            <TableCell>{expense.name}</TableCell>
+            <TableCell>{expense.amount}</TableCell>
+            <TableCell>{expense.category}</TableCell>
+            <TableCell>{expense.date}</TableCell>
+            {pathname !== "/dashboard" && (
+              <TableCell className="flex items-center justify-center gap-3">
+                <EditExpense expense={expense} />
 
-      <ScrollArea className="w-full h-60 rounded-md">
-        <Table className="bg-white border border-softGray rounded-md drop-shadow pointer-events-none text-center">
-          <TableHeader className="">
-            <TableRow>
-              <TableHead className="text-primary text-base text-center">
-                Nome
-              </TableHead>
-              <TableHead className="text-primary text-base w-28 text-center">
-                Valor
-              </TableHead>
-              <TableHead className="text-primary text-base w-44 text-center">
-                Categoria
-              </TableHead>
-              <TableHead className="text-primary text-base w-28 text-center">
-                Data
-              </TableHead>
-              {params.slug && (
-                <TableHead className="text-primary text-base w-28 text-center">
-                  Ações
-                </TableHead>
-              )}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {expenses.map((expense) => (
-              <TableRow key={expense.id}>
-                <TableCell>{expense.name}</TableCell>
-                <TableCell>{expense.amount}</TableCell>
-                <TableCell>{expense.category}</TableCell>
-                <TableCell>{expense.date}</TableCell>
-                {params.slug && (
-                  <TableCell className="flex items-center justify-center gap-3">
-                    <Image src={edit} />
-                    <Image src={trash} />
-                  </TableCell>
-                )}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </ScrollArea>
-    </div>
+                <DeleteExpense expense={expense} />
+              </TableCell>
+            )}
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }

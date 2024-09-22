@@ -5,25 +5,29 @@ import NavBar from "./_components/navBar";
 import FriendInvitation from "./_components/friendInvitation";
 
 function DashboardLayout({ children }) {
-    return (
-        <div className="flex w-svw h-svh">
-            <aside className="w-56 flex flex-col items-center py-5 px-4 gap-10 border-r border-r-[#E2E8F0]">
-                <Link href="/">
-                    <Image src="/Logo.svg" width={164} height={46} alt="Treasure logo" priority={true} />
-                </Link>
+  return (
+    <div className="flex w-svw h-svh">
+      <aside className="w-56 flex flex-col items-center py-5 px-4 gap-10 border-r border-r-[#E2E8F0]">
+        <Link href="/">
+          <Image
+            src="/Logo.svg"
+            width={164}
+            height={46}
+            alt="Treasure logo"
+            priority={true}
+          />
+        </Link>
 
-                <UserInfo />
+        <UserInfo />
 
-                <NavBar />
+        <NavBar />
 
-                <FriendInvitation />
-            </aside>
+        <FriendInvitation />
+      </aside>
 
-            <div className="flex-1">
-                {children}
-            </div>
-        </div>
-    );
+      <div className="flex-1">{children}</div>
+    </div>
+  );
 }
 
 export default DashboardLayout;
