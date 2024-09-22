@@ -1,6 +1,7 @@
 import { Progress } from "@/components/ui/progress";
+import Image from "next/image";
 
-function CategoryCard({ title, quantity, limit, spent, remaining }) {
+function CategoryCard({ emoji, title, quantity, limit, spent, remaining }) {
   function realCurrency(value) {
     return parseFloat(value).toFixed(2).replace(".", ",");
   }
@@ -10,10 +11,12 @@ function CategoryCard({ title, quantity, limit, spent, remaining }) {
   }
 
   return (
-    <div className="flex flex-col items-center gap-4 py-4 px-6 bg-white border border-softGray rounded-md drop-shadow pointer-events-none w-96">
+    <div className="flex flex-col items-center gap-4 py-4 px-6 bg-white border border-softGray rounded-md drop-shadow w-96 cursor-pointer hover:drop-shadow-lg transition duration-150 ease-out hover:ease-in">
       <div className="flex justify-between items-center w-full">
         <div className="flex items-center text-left gap-3">
-          <div className="bg-softGray p-3 rounded-full w-14 h-14" />
+          <div className="bg-softGray p-3 rounded-full w-14 h-14 items-center text-center text-xl">
+            <p>{emoji}</p>
+          </div>
           <div>
             <h2 className="scroll-m-20 pb-1 text-xl font-semibold tracking-tight first:mt-0">
               {title}
