@@ -122,7 +122,7 @@ const expenses = [
 
 export function ExpensesTable({ pathname }) {
   return (
-    <Table className="bg-white border border-softGray rounded-md drop-shadow pointer-events-none text-center pointer-events-auto">
+    <Table className="bg-white border border-softGray rounded-md drop-shadow text-center ">
       <TableHeader className="">
         <TableRow>
           <TableHead className="text-primary text-base text-center">

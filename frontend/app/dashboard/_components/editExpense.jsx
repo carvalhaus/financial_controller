@@ -29,16 +29,12 @@ function EditExpense({ expense }) {
 
         <form className="flex flex-col gap-4">
           <div className="flex flex-col gap-4">
-            <Label htmlFor="name" className="">
-              Name
-            </Label>
+            <Label htmlFor="name">Name</Label>
             <Input id="name" defaultValue={expense?.name} />
           </div>
 
           <div className="flex flex-col gap-4">
-            <Label htmlFor="username" className="">
-              Valor
-            </Label>
+            <Label htmlFor="username">Valor</Label>
             <Input id="username" defaultValue={expense?.amount} />
           </div>
 
