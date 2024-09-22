@@ -43,7 +43,7 @@ function ExpensesChart() {
 
       <ChartContainer
         config={chartConfig}
-        className="p-4 bg-white border border-softGray rounded-md w-[680px]"
+        className="p-4 bg-white border border-softGray rounded-md lg:h-64 xl:h-80 transition ease-in-out"
       >
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />

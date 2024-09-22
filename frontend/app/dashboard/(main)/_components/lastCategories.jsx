@@ -74,7 +74,7 @@ function LastCategories() {
         Últimas categorias
       </h3>
 
-      <ScrollArea className=" h-96">
+      <ScrollArea className=" h-80 rounded-md">
         <div className="flex flex-col gap-3">
           {categories.map((category, index) => (
             <CategoryCard
