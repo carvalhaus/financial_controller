@@ -6,31 +6,8 @@ import { ExpensesTable } from "../_components/expensesTable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import react from "react";
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
 function Expenses() {
   const pathname = usePathname();
-
-  const [windowDimensions, setWindowDimensions] = react.useState(
-    getWindowDimensions()
-  );
-
-  react.useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  console.log(windowDimensions);
 
   return (
     <div className="h-full flex flex-col">
@@ -43,10 +20,7 @@ function Expenses() {
           Últimos lançamentos
         </h3>
 
-        <ScrollArea
-          className="rounded-md"
-          style={{ height: `${windowDimensions.height - 190}px` }}
-        >
+        <ScrollArea className="rounded-md">
           <ExpensesTable pathname={pathname} />
         </ScrollArea>
       </div>
