@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function SummaryCard({ title, details, icon }) {
   return (
-    <div className="flex flex-col md:flex-row items-center text-center md:py-2 md:px-4 gap-2 xl:gap-4 xl:py-4 xl:px-6 bg-white border border-softGray rounded-md drop-shadow pointer-events-none">
+    <div className="flex flex-col-reverse md:flex-row items-center text-center p-2 md:py-2 md:px-4 gap-2 xl:gap-4 xl:py-4 xl:px-6 bg-white border border-softGray rounded-md drop-shadow pointer-events-none">
       <div>
         <h2 className="scroll-m-20 pb-1 text-xl font-medium tracking-tight first:mt-0">
           {title}

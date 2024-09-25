@@ -1,6 +1,10 @@
+import SidebarMobile from "./sidebarMobile";
+
 function DashboardsHeader({ title, category, subtitle }) {
   return (
-    <header className="border-b border-b-[#E2E8F0] px-10 py-5">
+    <header className="border-b border-b-[#E2E8F0] px-10 py-5 flex flex-col items-center md:items-start relative">
+      <SidebarMobile />
+
       <div className="flex gap-2">
         <h1
           className={`scroll-m-20 text-3xl font-extrabold tracking-wide ${

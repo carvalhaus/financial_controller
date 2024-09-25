@@ -31,17 +31,17 @@ const navItems = [
 function NavBar() {
   const pathname = usePathname();
   return (
-    <NavigationMenu className="items-start">
-      <NavigationMenuList className="flex-col gap-3 w-48">
+    <NavigationMenu className="items-start w-full">
+      <NavigationMenuList className="flex-col gap-3 w-full">
         {navItems.map((item, index) => (
           <Link key={index} href={item.href} className="w-full">
             <NavigationMenuItem
-              className={`flex items-center gap-2 px-[6px] py-2 hover:bg-accent hover:rounded-sm ${
+              className={`flex items-center gap-2 px-[6px] py-2 w-full hover:bg-accent hover:rounded-sm ${
                 pathname === item.href && "bg-accent rounded-sm"
               }`}
             >
               <Image src={item.icon} width={32} height={32} alt="Item ícone" />
-              <p className="text-2xl font-medium">{item.title}</p>
+              <p className="text-xl font-medium">{item.title}</p>
             </NavigationMenuItem>
           </Link>
         ))}

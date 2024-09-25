@@ -16,12 +16,13 @@ function MainDashboard() {
         title={"Ola, Johan"}
         subtitle={"Vamos controlar suas despesas?"}
       />
-      <div className="flex-1 flex-col p-4">
+
+      <div className="flex-1 flex flex-col items-center md:p-4 px-4 pb-4">
         <SummarySection />
 
         <ActivitiesSection />
 
-        <div className="flex flex-col items-center justify-center pt-5">
+        <div className="flex flex-col items-center justify-center pt-5 w-full">
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-3">
             Últimos lançamentos
           </h3>

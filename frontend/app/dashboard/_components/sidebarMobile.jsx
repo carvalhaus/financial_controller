@@ -1,6 +1,7 @@
 import {
   Sheet,
   SheetContent,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -11,20 +12,26 @@ import Image from "next/image";
 import UserInfo from "./userInfo";
 import NavBar from "./navBar";
 import FriendInvitation from "./friendInvitation";
+import { MenuIcon } from "lucide-react";
 
 function SidebarMobile() {
   return (
     <Sheet>
-      <SheetTrigger>p</SheetTrigger>
+      <SheetTrigger className="absolute top-2 left-2 md:hidden">
+        <MenuIcon size={32} />
+      </SheetTrigger>
 
-      <SheetContent side="left" className="flex flex-col w-1/3 h-full">
+      <SheetContent
+        side="left"
+        className="flex flex-col items-center gap-12 h-full"
+      >
         <SheetHeader>
           <SheetTitle>
             <Link href="/">
               <Image
                 src="/Logo.svg"
-                width={164}
-                height={46}
+                width={180}
+                height={62}
                 alt="Treasure logo"
                 priority={true}
               />
@@ -36,7 +43,9 @@ function SidebarMobile() {
 
         <NavBar />
 
-        <FriendInvitation />
+        <SheetFooter>
+          <FriendInvitation />
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

@@ -5,15 +5,10 @@ import SidebarMobile from "./_components/sidebarMobile";
 function DashboardLayout({ children }) {
   return (
     <>
-      <div className="flex w-svw h-svh">
+      <div className="flex flex-col md:flex-row w-svw h-svh">
         <Sidebar />
 
-        <div className="flex-1">
-          <>
-            <SidebarMobile />
-            {children}
-          </>
-        </div>
+        <div className="flex-1">{children}</div>
         <Toaster />
       </div>
     </>

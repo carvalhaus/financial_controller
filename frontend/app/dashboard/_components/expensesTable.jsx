@@ -128,13 +128,13 @@ export function ExpensesTable({ pathname }) {
           <TableHead className="text-primary text-base text-center">
             Nome
           </TableHead>
-          <TableHead className="text-primary text-base w-28 text-center">
+          <TableHead className="text-primary text-base w-28 text-center px-0 md:px-4">
             Valor
           </TableHead>
-          <TableHead className="text-primary text-base w-44 text-center">
+          <TableHead className="text-primary text-base w-44 text-center px-3 md:px-4">
             Categoria
           </TableHead>
-          <TableHead className="text-primary text-base w-28 text-center">
+          <TableHead className="text-primary text-base w-28 text-center hidden md:table-cell">
             Data
           </TableHead>
           {pathname !== "/dashboard" && (
@@ -148,9 +148,11 @@ export function ExpensesTable({ pathname }) {
         {expenses.map((expense) => (
           <TableRow key={expense.id}>
             <TableCell>{expense.name}</TableCell>
-            <TableCell>{expense.amount}</TableCell>
-            <TableCell>{expense.category}</TableCell>
-            <TableCell>{expense.date}</TableCell>
+            <TableCell className="px-0">{expense.amount}</TableCell>
+            <TableCell className="px-0">{expense.category}</TableCell>
+            <TableCell className="hidden md:table-cell">
+              {expense.date}
+            </TableCell>
             {pathname !== "/dashboard" && (
               <TableCell className="flex items-center justify-center gap-3">
                 <EditExpense expense={expense} />

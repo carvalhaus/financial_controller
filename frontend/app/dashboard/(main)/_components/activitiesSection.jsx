@@ -3,7 +3,7 @@ import LastCategories from "./lastCategories";
 
 function ActivitiesSection() {
   return (
-    <section className="flex justify-evenly min-h-96">
+    <section className="flex flex-col items-center md:flex-row gap-4 py-5 md:justify-evenly w-full">
       <ExpensesChart />
 
       <LastCategories />

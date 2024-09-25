@@ -43,7 +43,7 @@ function FriendInvitation() {
   }
 
   return (
-    <Dialog className="flex-1">
+    <Dialog>
       <DialogTrigger asChild>
         <Button className="w-full text-base" size="lg">
           Convide um amigo
