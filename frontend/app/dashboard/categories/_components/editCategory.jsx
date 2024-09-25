@@ -24,7 +24,7 @@ function EditCategory() {
         <Button className="w-full">Editar categoria</Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="w-11/12 rounded-md">
         <DialogHeader>
           <DialogTitle>Editar Categoria</DialogTitle>
           <DialogDescription>Edite a categoria selecionada</DialogDescription>

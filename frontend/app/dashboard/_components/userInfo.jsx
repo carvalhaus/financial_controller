@@ -20,13 +20,13 @@ const userData = {
 function UserInfo() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center w-full px-[6px] gap-2 focus-visible:outline-none">
+      <DropdownMenuTrigger className="flex items-center justify-center px-[6px] gap-2 focus-visible:outline-none">
         <Avatar className="size-10">
           <AvatarFallback className="bg-softGray size-10 text-base">
             {userData.name[0]}
           </AvatarFallback>
         </Avatar>
-        <h4 className="text-xl font-semibold tracking-tight">
+        <h4 className="text-2xl font-semibold tracking-tight">
           {userData.username}
         </h4>
       </DropdownMenuTrigger>

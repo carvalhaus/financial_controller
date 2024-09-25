@@ -20,7 +20,7 @@ function EditExpense({ expense }) {
         <Image src={edit} alt="Ícone de editar" className="cursor-pointer" />
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="w-11/12 rounded-md">
         <DialogHeader>
           <DialogTitle>Editar Despesa</DialogTitle>
 

@@ -9,7 +9,7 @@ function AddExpense() {
   const { toast } = useToast();
 
   return (
-    <div className="flex flex-col gap-4 py-4 px-6 bg-white border border-softGray rounded-md drop-shadow w-96">
+    <div className="flex flex-col gap-4 py-4 px-6 bg-white border border-softGray rounded-md drop-shadow w-full md:w-96">
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
         Adicionar despesa
       </h2>

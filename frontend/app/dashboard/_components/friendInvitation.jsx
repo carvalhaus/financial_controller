@@ -50,7 +50,7 @@ function FriendInvitation() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="w-11/12 rounded-md">
         <DialogHeader>
           <DialogTitle>Convidar um amigo</DialogTitle>
           <DialogDescription>

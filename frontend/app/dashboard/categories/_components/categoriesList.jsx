@@ -5,8 +5,8 @@ import AddCategory from "./addCategory";
 
 function CategoriesList() {
   return (
-    <ScrollArea className="flex-1 p-4">
-      <div className="flex flex-wrap gap-3">
+    <div className="flex-1 p-4 w-full">
+      <div className="flex flex-col md:flex-row md:flex-wrap gap-4 2xl:gap-5 w-full">
         <AddCategory />
 
         {categories.map((category, index) => (
@@ -21,7 +21,7 @@ function CategoriesList() {
           />
         ))}
       </div>
-    </ScrollArea>
+    </div>
   );
 }
 

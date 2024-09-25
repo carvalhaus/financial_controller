@@ -20,7 +20,7 @@ function DeleteCategory() {
         </Button>
       </AlertDialogTrigger>
 
-      <AlertDialogContent>
+      <AlertDialogContent className="w-11/12 rounded-md">
         <AlertDialogHeader>
           <AlertDialogTitle>
             Tem certeza que deseja excluir essa categoria?

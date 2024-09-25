@@ -31,22 +31,22 @@ const navItems = [
 function NavBar() {
   const pathname = usePathname();
   return (
-    <NavigationMenu className="items-start w-full">
-      <NavigationMenuList className="flex-col gap-3 w-full">
+    <nav className="items-start flex-1 w-full">
+      <ul className="flex flex-col gap-3 w-full">
         {navItems.map((item, index) => (
           <Link key={index} href={item.href} className="w-full">
-            <NavigationMenuItem
-              className={`flex items-center gap-2 px-[6px] py-2 w-full hover:bg-accent hover:rounded-sm ${
+            <li
+              className={`flex items-center justify-center gap-2 px-[6px] py-2 w-full hover:bg-accent hover:rounded-sm ${
                 pathname === item.href && "bg-accent rounded-sm"
               }`}
             >
               <Image src={item.icon} width={32} height={32} alt="Item ícone" />
               <p className="text-xl font-medium">{item.title}</p>
-            </NavigationMenuItem>
+            </li>
           </Link>
         ))}
-      </NavigationMenuList>
-    </NavigationMenu>
+      </ul>
+    </nav>
   );
 }
 
