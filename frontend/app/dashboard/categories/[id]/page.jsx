@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import CategoryCard from "../../_components/categoryCard";
 import DashboardsHeader from "../../_components/dashboardsHeader";
 import react from "react";
@@ -11,9 +10,21 @@ import { ExpensesTable } from "../../_components/expensesTable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 function CategorySelected({ params }) {
+  const [windowDimensions, setWindowDimensions] = react.useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
   react.useEffect(() => {
-    console.log(params);
-  }, [params]);
+    const handleResize = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="h-full flex flex-col">
@@ -41,7 +52,10 @@ function CategorySelected({ params }) {
             Últimos lançamentos
           </h3>
 
-          <ScrollArea className="xl:h-[474px]">
+          <ScrollArea
+            className="rounded-md"
+            style={{ height: `${windowDimensions.height - 520}px` }}
+          >
             <ExpensesTable />
           </ScrollArea>
         </div>

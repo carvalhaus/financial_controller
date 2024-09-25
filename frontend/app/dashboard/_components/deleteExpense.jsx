@@ -16,8 +16,12 @@ import { buttonVariants } from "@/components/ui/button";
 function DeleteExpense() {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Image src={trash} alt="Ícone de deletar" />
+      <AlertDialogTrigger className="h-full">
+        <Image
+          src={trash}
+          alt="Ícone de deletar"
+          className="cursor-pointer h-full"
+        />
       </AlertDialogTrigger>
 
       <AlertDialogContent className="w-11/12 rounded-md">

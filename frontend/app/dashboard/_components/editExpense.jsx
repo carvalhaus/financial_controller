@@ -16,8 +16,12 @@ import { Button } from "@/components/ui/button";
 function EditExpense({ expense }) {
   return (
     <Dialog>
-      <DialogTrigger>
-        <Image src={edit} alt="Ícone de editar" className="cursor-pointer" />
+      <DialogTrigger className="h-full">
+        <Image
+          src={edit}
+          alt="Ícone de editar"
+          className="cursor-pointer h-full"
+        />
       </DialogTrigger>
 
       <DialogContent className="w-11/12 rounded-md">

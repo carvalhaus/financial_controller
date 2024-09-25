@@ -122,7 +122,7 @@ const expenses = [
 
 export function ExpensesTable({ pathname }) {
   return (
-    <Table className="bg-white border border-softGray rounded-md drop-shadow text-center ">
+    <Table className="bg-white border border-softGray rounded-md drop-shadow text-center table-auto">
       <TableHeader className="">
         <TableRow>
           <TableHead className="text-primary text-base text-center">
@@ -154,7 +154,7 @@ export function ExpensesTable({ pathname }) {
               {expense.date}
             </TableCell>
             {pathname !== "/dashboard" && (
-              <TableCell className="flex items-center justify-center gap-3">
+              <TableCell className="flex items-center justify-center gap-3 h-full align-middle">
                 <EditExpense expense={expense} />
 
                 <DeleteExpense expense={expense} />
