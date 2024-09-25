@@ -34,11 +34,11 @@ function CategorySelected({ params }) {
         subtitle={"Destalhes da categoria selecionada"}
       />
 
-      <div className="flex-1 flex flex-col p-4 gap-10 md:gap-0">
-        <div className="flex flex-col md:flex-row gap-6 md:gap-20 items-center justify-center">
-          <div className="flex flex-col gap-4 w-full md:w-1/3">
+      <div className="flex-1 flex flex-col p-4 gap-10 lg:gap-0">
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-10 lg:gap-20 items-center justify-center">
+          <div className="flex flex-col items-center gap-4 w-full lg:w-1/3">
             <CategoryCard />
-            <div className="flex gap-4">
+            <div className="flex gap-4 md:w-2/3">
               <DeleteCategory />
               <EditCategory />
             </div>

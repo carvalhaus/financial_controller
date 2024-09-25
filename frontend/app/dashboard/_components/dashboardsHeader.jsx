@@ -2,7 +2,7 @@ import SidebarMobile from "./sidebarMobile";
 
 function DashboardsHeader({ title, category, subtitle }) {
   return (
-    <header className="border-b border-b-[#E2E8F0] px-10 py-5 flex flex-col items-center md:items-start relative">
+    <header className="border-b border-b-[#E2E8F0] px-10 py-5 flex flex-col items-center lg:items-start relative">
       <SidebarMobile />
 
       <div className="flex gap-2">

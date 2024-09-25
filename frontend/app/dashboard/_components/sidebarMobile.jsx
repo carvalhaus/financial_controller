@@ -17,7 +17,7 @@ import { MenuIcon } from "lucide-react";
 function SidebarMobile() {
   return (
     <Sheet>
-      <SheetTrigger className="absolute top-2 left-2 md:hidden">
+      <SheetTrigger className="absolute top-2 left-2 lg:hidden">
         <MenuIcon size={32} />
       </SheetTrigger>
 

@@ -6,7 +6,7 @@ import FriendInvitation from "./friendInvitation";
 
 function Sidebar() {
   return (
-    <aside className="w-56 h-full hidden md:flex md:flex-col items-center py-5 px-4 gap-10 border-r border-r-[#E2E8F0]">
+    <aside className="w-56 h-full hidden lg:flex md:flex-col items-center py-5 px-4 gap-10 border-r border-r-[#E2E8F0]">
       <Link href="/">
         <Image
           src="/Logo.svg"

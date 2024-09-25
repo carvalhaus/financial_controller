@@ -20,8 +20,8 @@ function AddCategory() {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <div className="flex items-center justify-center bg-white border border-softGray rounded-md drop-shadow md:w-96 h-[158px] md:h-full text-4xl cursor-pointer hover:drop-shadow-lg transition duration-150 ease-out hover:ease-in">
+      <DialogTrigger className="md:w-2/3 lg:w-96">
+        <div className="flex items-center justify-center bg-white border border-softGray rounded-md drop-shadow lg:w-96 h-[158px] md:h-[174px] text-4xl cursor-pointer hover:drop-shadow-lg transition duration-150 ease-out hover:ease-in">
           &#43;
         </div>
       </DialogTrigger>

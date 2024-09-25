@@ -10,7 +10,7 @@ function LastCategories() {
       </h3>
 
       <ScrollArea className=" h-80 rounded-md">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col md:items-center gap-3">
           {categories.map((category, index) => (
             <CategoryCard
               key={index}

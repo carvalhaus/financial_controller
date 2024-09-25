@@ -11,7 +11,7 @@ function CategoryCard({ emoji, title, quantity, limit, spent, remaining }) {
   }
 
   return (
-    <div className="flex flex-col items-center gap-4 p-2 md:py-4 md:px-6 md:w-96 bg-white border border-softGray rounded-md drop-shadow w-auto cursor-pointer hover:drop-shadow-lg transition duration-150 ease-out hover:ease-in">
+    <div className="flex flex-col items-center gap-4 p-2 md:py-4 md:px-6 md:w-2/3 lg:w-96 bg-white border border-softGray rounded-md drop-shadow w-auto cursor-pointer hover:drop-shadow-lg transition duration-150 ease-out hover:ease-in">
       <div className="flex justify-between items-center w-full">
         <div className="flex items-center text-left gap-3">
           <div className="bg-softGray p-3 rounded-full md:w-14 md:h-14 items-center text-center text-xl">
