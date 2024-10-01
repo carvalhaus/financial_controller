@@ -1,9 +1,9 @@
-const { registerUserSchema } = require("../models/user");
+const { loginUserSchema } = require("../models/user");
 const { ZodError } = require("zod");
 
-const validateRegisterUser = (req, res, next) => {
+const validateLoginUser = (req, res, next) => {
   try {
-    registerUserSchema.parse(req.body);
+    loginUserSchema.parse(req.body);
     next();
   } catch (error) {
     if (error instanceof ZodError) {
@@ -13,4 +13,4 @@ const validateRegisterUser = (req, res, next) => {
   }
 };
 
-module.exports = validateRegisterUser;
+module.exports = validateLoginUser;
