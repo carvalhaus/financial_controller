@@ -15,4 +15,11 @@ const registerUserSchema = z
     path: ["confirmPassword"],
   });
 
-module.exports = registerUserSchema;
+const loginUserSchema = z.object({
+  email: z.string().email({ message: "O e-mail dever ser válido" }),
+  password: z
+    .string()
+    .min(6, { message: "A senha deve ter no mínimo 6 caracteres" }),
+});
+
+module.exports = { registerUserSchema, loginUserSchema };
