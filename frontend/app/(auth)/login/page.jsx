@@ -36,7 +36,7 @@ function Login() {
   });
 
   async function onSubmit(values) {
-    const endpoint = `${process.env.NEXT_PUBLIC_SERVER_EDNPOINT}/api/sessions/login`;
+    const endpoint = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/sessions/login`;
 
     try {
       const response = await fetch(endpoint, {
@@ -63,8 +63,6 @@ function Login() {
         title: err,
       });
     }
-
-    console.log(values, endpoint);
   }
 
   return (

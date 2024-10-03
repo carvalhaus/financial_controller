@@ -12,7 +12,7 @@ function DashboardLayout({ children }) {
     const fetchProtectedData = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_EDNPOINT}/api/protected`,
+          `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/protected`,
           {
             method: "GET",
             credentials: "include",

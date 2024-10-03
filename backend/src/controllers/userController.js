@@ -26,7 +26,7 @@ const userController = {
         user: { email: newUser.email },
       });
     } catch (error) {
-      res.status(500).json({ error: "Erro ao registrar usuário." });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -57,7 +57,7 @@ const userController = {
         token,
       });
     } catch (error) {
-      res.status(500).json({ error: "Erro ao logar usuário." });
+      res.status(500).json({ error: error.message });
     }
   },
 };
