@@ -5,6 +5,7 @@ import Link from "next/link";
 import { IconBrandGoogleFilled } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import getGoogleOAuthUlrl from "@/lib/getGoogleUrl";
+import { Toaster } from "@/components/ui/toaster";
 
 function AuthLayout({ children }) {
   return (
@@ -73,6 +74,7 @@ function AuthLayout({ children }) {
           </div>
         </main>
       </div>
+      <Toaster />
     </section>
   );
 }
