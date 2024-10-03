@@ -1,5 +1,6 @@
 const userService = require("../services/userService");
 const hashPassword = require("../utils/hashPassword");
+const createJwt = require("../utils/createJwt");
 const bcrypt = require("bcryptjs");
 
 const userController = {
@@ -11,9 +12,19 @@ const userController = {
 
       const newUser = await userService.registerUser(email, hashedPassword);
 
-      res
-        .status(201)
-        .json({ message: "Usuário registrado com sucesso!", user: newUser });
+      const token = createJwt(newUser);
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        maxAge: 3600000,
+        sameSite: "strict",
+      });
+
+      res.status(201).json({
+        message: "Usuário registrado com sucesso!",
+        user: { email: newUser.email },
+      });
     } catch (error) {
       res.status(500).json({ error: "Erro ao registrar usuário." });
     }
@@ -28,12 +39,23 @@ const userController = {
       const isPasswordValid = await bcrypt.compare(password, user.password);
 
       if (!isPasswordValid) {
-        return res.status(400).json({ error: "Senha incorreta!" });
+        return res.status(400).json({ error: "E-mail ou senha inválidos!" });
       }
 
-      res
-        .status(200)
-        .json({ message: "Login bem-sucedido!", user: { email: user.email } });
+      const token = createJwt(user);
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        maxAge: 3600000,
+        sameSite: "strict",
+      });
+
+      res.status(200).json({
+        message: "Login bem-sucedido!",
+        user: { email: user.email },
+        token,
+      });
     } catch (error) {
       res.status(500).json({ error: "Erro ao logar usuário." });
     }

@@ -28,7 +28,7 @@ const userService = {
     });
 
     if (!user) {
-      throw new Error("E-mail não registrado!");
+      throw new Error("E-mail ou senha inválidos!");
     }
 
     return user;
