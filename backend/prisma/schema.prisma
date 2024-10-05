@@ -29,6 +29,7 @@ model Category {
   amount    Float
   icon      String
   createdBy DateTime
+  createdAt DateTime @default(now())
 
   Expense Expense[]
   User    User?     @relation(fields: [userId], references: [id])
@@ -39,7 +40,7 @@ model Expense {
   id        String   @id @default(uuid())
   name      String
   amount    Float
-  createdAt DateTime
+  createdAt DateTime @default(now())
 
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
