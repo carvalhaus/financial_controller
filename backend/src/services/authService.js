@@ -1,7 +1,7 @@
 const prisma = require("../config/prismaClient");
 require("dotenv").config();
 
-const userService = {
+const authService = {
   async registerUser(email, hashedPassword) {
     let username = email.split("@")[0];
 
@@ -131,4 +131,4 @@ const googleOAuthService = {
   },
 };
 
-module.exports = { userService, googleOAuthService };
+module.exports = { authService, googleOAuthService };

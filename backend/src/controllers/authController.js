@@ -1,4 +1,4 @@
-const { userService, googleOAuthService } = require("../services/authService");
+const { authService, googleOAuthService } = require("../services/authService");
 const hashPassword = require("../utils/hashPassword");
 const createJwt = require("../utils/createJwt");
 const bcrypt = require("bcryptjs");
@@ -11,7 +11,7 @@ const authController = {
     try {
       const hashedPassword = await hashPassword(password);
 
-      const newUser = await userService.registerUser(email, hashedPassword);
+      const newUser = await authService.registerUser(email, hashedPassword);
 
       const token = createJwt(newUser);
 
@@ -35,7 +35,7 @@ const authController = {
     const { email, password } = req.body;
 
     try {
-      const user = await userService.loginUser(email);
+      const user = await authService.loginUser(email);
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
 
