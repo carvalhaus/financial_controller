@@ -1,4 +1,4 @@
-const { registerUserSchema } = require("../models/userModel");
+const { registerUserSchema } = require("../models/authModel");
 const { ZodError } = require("zod");
 
 const validateRegisterUser = (req, res, next) => {
