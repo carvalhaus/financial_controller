@@ -3,7 +3,9 @@ const { ZodError } = require("zod");
 
 const validateGetUser = (req, res, next) => {
   try {
-    getUserSchema.parse(req.body);
+    const { userId } = req.params;
+
+    getUserSchema.parse({ userId });
     next();
   } catch (error) {
     if (error instanceof ZodError) {

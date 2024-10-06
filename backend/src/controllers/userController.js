@@ -2,10 +2,10 @@ const userService = require("../services/userService");
 
 const userController = {
   getUser: async (req, res) => {
-    const { email } = req.body;
+    const { userId } = req.params;
 
     try {
-      const userData = await userService.getUser(email);
+      const userData = await userService.getUser(userId);
 
       res.status(200).json({
         message: "Dados do usuário recebidos com sucesso!",

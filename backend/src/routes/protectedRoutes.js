@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/protected", authenticateJwt, (req, res) => {
   res.status(200).json({
     message: "Você acessou uma rota protegida!",
-    user: req.user,
+    userId: req.user.userId,
   });
 });
 

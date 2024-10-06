@@ -1,9 +1,9 @@
 const prisma = require("../config/prismaClient");
 
 const userService = {
-  getUser: async (email) => {
+  getUser: async (userId) => {
     const existingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { id: userId },
       select: {
         id: true,
         email: true,
