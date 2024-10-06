@@ -52,6 +52,7 @@ function SettingsModal({ userData }) {
   function onSubmit(values) {
     console.log(values);
   }
+
   return (
     <DialogContent className="p-5 w-11/12 rounded-md">
       <DialogHeader>
@@ -125,7 +126,8 @@ function SettingsModal({ userData }) {
                         variant={"outline"}
                         className={cn(
                           "w-[240px] pl-3 text-left font-normal border-[#292E33]/40",
-                          !field.value && "text-muted-foreground"
+                          !field.value &&
+                            "text-muted-foreground border-2 border-red-700"
                         )}
                       >
                         {field.value ? (
