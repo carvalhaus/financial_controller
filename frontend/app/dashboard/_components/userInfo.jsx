@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { IconLogout, IconSettings } from "@tabler/icons-react";
+import { IconLogout } from "@tabler/icons-react";
 import SettingsModal from "./settings";
 import { useApi } from "@/contexts/contextApi";
 
@@ -28,14 +27,7 @@ function UserInfo() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
-        <Dialog>
-          <DialogTrigger className="flex gap-2 tracking-wide px-2 py-[6px] hover:bg-accent hover:rounded-sm">
-            <IconSettings />
-            <span>Configurações</span>
-          </DialogTrigger>
-
-          <SettingsModal userData={userData} />
-        </Dialog>
+        <SettingsModal userData={userData} />
 
         <DropdownMenuItem className="gap-2 tracking-wide">
           <IconLogout />
