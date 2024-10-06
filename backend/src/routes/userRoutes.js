@@ -1,5 +1,8 @@
 const express = require("express");
-const validateGetUser = require("../middleware/validateGetUser");
+const {
+  validateGetUser,
+  validateUpdateUser,
+} = require("../middleware/userMiddleware");
 const authenticateJwt = require("../middleware/authenticateJwt");
 const userController = require("../controllers/userController");
 
@@ -11,5 +14,7 @@ router.get(
   validateGetUser,
   userController.getUser
 );
+
+router.post("/api/users/update", validateUpdateUser, userController.updateUser);
 
 module.exports = router;
