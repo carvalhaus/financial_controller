@@ -1,7 +1,11 @@
+"use client";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { IconLogout } from "@tabler/icons-react";
 import SettingsModal from "./settings";
 import { useApi } from "@/contexts/contextApi";
+import react from "react";
+import { useRouter } from "next/navigation";
 
 const {
   DropdownMenu,
@@ -12,6 +16,29 @@ const {
 
 function UserInfo() {
   const { userData } = useApi();
+  const router = useRouter();
+
+  async function handleLogout() {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/clear-cookies`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        console.log("Cookies cleared successfully!");
+
+        router.push("/login");
+      } else {
+        console.error("Error clearing cookies.");
+      }
+    } catch (error) {
+      console.error("Error in request:", error);
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -29,7 +56,10 @@ function UserInfo() {
       <DropdownMenuContent>
         <SettingsModal userData={userData} />
 
-        <DropdownMenuItem className="gap-2 tracking-wide">
+        <DropdownMenuItem
+          className="gap-2 tracking-wide"
+          onSelect={handleLogout}
+        >
           <IconLogout />
           <span>Sair</span>
         </DropdownMenuItem>

@@ -8,7 +8,7 @@ import { useApi } from "@/contexts/contextApi";
 
 function DashboardLayout({ children }) {
   const router = useRouter();
-  const { setUserData } = useApi();
+  const { userData, setUserData } = useApi();
 
   const BASE_URL = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}`;
 
@@ -51,7 +51,7 @@ function DashboardLayout({ children }) {
     };
 
     fetchProtectedData();
-  }, [router]);
+  }, [userData]);
   return (
     <div className="flex flex-col md:flex-row w-svw h-svh">
       <Sidebar />
