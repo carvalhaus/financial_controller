@@ -1,6 +1,6 @@
 const express = require("express");
-const validateRegisterUser = require("../middleware/validateRegisterUser");
-const validateLoginUser = require("../middleware/validateLoginUser");
+const { validateRegisterUser } = require("../middleware/authMiddleware");
+const { validateLoginUser } = require("../middleware/authMiddleware");
 const {
   authController,
   googleOAuthHandler,
