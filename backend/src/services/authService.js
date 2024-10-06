@@ -102,6 +102,14 @@ const googleOAuthService = {
     let username = email.split("@")[0];
 
     try {
+      const existingUser = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (existingUser) {
+        return existingUser;
+      }
+
       const existingUsername = await prisma.user.findUnique({
         where: { username },
       });
