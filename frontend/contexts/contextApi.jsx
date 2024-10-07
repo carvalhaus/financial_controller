@@ -14,44 +14,37 @@ function ContextApiProvider({ children }) {
 
   const BASE_URL = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}`;
 
+  const fetchWithCredentials = async (url) => {
+    const response = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Falha ao buscar os dados do endereço: ${url}`);
+    }
+
+    return response.json();
+  };
+
+  const fetchProtectedData = async () => {
+    try {
+      const protectedData = await fetchWithCredentials(
+        `${BASE_URL}/api/protected`
+      );
+
+      const userDataResponse = await fetchWithCredentials(
+        `${BASE_URL}/api/users/${protectedData.userId}`
+      );
+
+      setUserData(userDataResponse.userData);
+    } catch (err) {
+      console.error("Erro inesperado:", err);
+      router.push("/login");
+    }
+  };
+
   react.useEffect(() => {
-    const fetchProtectedData = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/api/protected`, {
-          method: "GET",
-          credentials: "include",
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          router.push("/login");
-        }
-
-        if (response.ok) {
-          const userResponse = await fetch(
-            `${BASE_URL}/api/users/${data.userId}`,
-            {
-              method: "GET",
-              credentials: "include",
-            }
-          );
-
-          const userData = await userResponse.json();
-
-          if (userResponse.ok) {
-            setUserData(userData.userData);
-          } else {
-            console.error(userData.message);
-            router.push("/login");
-          }
-        }
-      } catch (err) {
-        console.error("An error occurred:", err);
-        router.push("/login");
-      }
-    };
-
     fetchProtectedData();
   }, [userData]);
 
