@@ -1,5 +1,9 @@
 const { z } = require("zod");
 
+const getCategories = z.object({
+  userId: z.string().uuid(),
+});
+
 const createCategorySchema = z.object({
   userId: z.string().uuid(),
   icon: z.string(),
@@ -7,4 +11,4 @@ const createCategorySchema = z.object({
   amount: z.number(),
 });
 
-module.exports = { createCategorySchema };
+module.exports = { getCategories, createCategorySchema };

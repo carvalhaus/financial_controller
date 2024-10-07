@@ -1,8 +1,17 @@
 const express = require("express");
-const { validateCreateCategory } = require("../middleware/categoryMiddleware");
+const {
+  validateCreateCategory,
+  validateGetCategories,
+} = require("../middleware/categoryMiddleware");
 const categoryController = require("../controllers/categoryController");
 
 const router = express.Router();
+
+router.get(
+  "/api/categories/:userId",
+  validateGetCategories,
+  categoryController.getCategories
+);
 
 router.post(
   "/api/categories/create",

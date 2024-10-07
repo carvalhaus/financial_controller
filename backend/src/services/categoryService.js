@@ -23,6 +23,25 @@ const categoryService = {
 
     return newCategory;
   },
+
+  getCategories: async (userId) => {
+    try {
+      const categories = await prisma.category.findMany({
+        where: {
+          userId: userId,
+        },
+      });
+
+      if (categories.length === 0) {
+        throw new Error("Usuário não possui nenhuma categoria cadastrada!");
+      }
+
+      return categories;
+    } catch (error) {
+      console.error("Erro ao buscar categorias:", error);
+      throw new Error("Não foi possível recuperar as categorias.");
+    }
+  },
 };
 
 module.exports = categoryService;

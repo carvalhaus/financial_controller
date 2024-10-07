@@ -1,5 +1,8 @@
 const { ZodError } = require("zod");
-const { createCategorySchema } = require("../models/categoryModel");
+const {
+  createCategorySchema,
+  getCategories,
+} = require("../models/categoryModel");
 
 const validateCreateCategory = (req, res, next) => {
   try {
@@ -13,4 +16,18 @@ const validateCreateCategory = (req, res, next) => {
   }
 };
 
-module.exports = { validateCreateCategory };
+const validateGetCategories = (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    getCategories.parse({ userId });
+    next();
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({ errors: error.errors });
+    }
+    next(error);
+  }
+};
+
+module.exports = { validateCreateCategory, validateGetCategories };
