@@ -106,6 +106,8 @@ function SettingsModal({ userData }) {
     if (!comparedData) {
       const updatedData = { id, username, name, birthday: formattedBirthday };
 
+      console.log("Atualizando dados");
+
       const isUpdated = await updateUser(updatedData);
     }
 
