@@ -33,7 +33,7 @@ const addCategoryFormSchema = z.object({
     .positive({ message: "O limite deve ser maior que zero" }),
 });
 
-function AddCategory() {
+function AddCategory({ fetchProtectedData }) {
   const { toast } = useToast();
 
   const [emojiIcon, setEmojiIcon] = react.useState("🙄");
@@ -84,6 +84,8 @@ function AddCategory() {
 
       addCategoryForm.reset();
       setOpen(false);
+
+      fetchProtectedData();
     } catch (error) {
       console.error("Erro na requisição:", error);
       errorToast(error.message);

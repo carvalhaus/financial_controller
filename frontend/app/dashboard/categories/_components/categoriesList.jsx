@@ -19,6 +19,7 @@ function CategoriesList() {
         `${BASE_URL}/api/protected`
       );
 
+      console.log("GET CATEGORIES");
       const categoriesResponse = await fetchWithCredentials(
         `${BASE_URL}/api/categories/${protectedData.userId}`
       );
@@ -37,7 +38,7 @@ function CategoriesList() {
   return (
     <div className="flex-1 p-4 w-full">
       <div className="flex flex-col justify-center md:flex-row md:flex-wrap gap-4 2xl:gap-5 w-full">
-        <AddCategory />
+        <AddCategory fetchProtectedData={fetchProtectedData} />
 
         {categories?.map((category) => (
           <CategoryCard

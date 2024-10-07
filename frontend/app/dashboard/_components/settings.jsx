@@ -33,6 +33,7 @@ import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { IconSettings } from "@tabler/icons-react";
 import react from "react";
+import { useApi } from "@/contexts/contextApi";
 
 const settingsFormSchema = z.object({
   username: z.string().min(4, { message: "Esse campo é obrigatório" }),
@@ -53,6 +54,8 @@ const settingsFormSchema = z.object({
 
 function SettingsModal({ userData }) {
   const [open, setOpen] = react.useState(false);
+
+  const { fetchProtectedData } = useApi();
 
   const settingsForm = useForm({
     resolver: zodResolver(settingsFormSchema),
@@ -109,6 +112,10 @@ function SettingsModal({ userData }) {
       console.log("Atualizando dados");
 
       const isUpdated = await updateUser(updatedData);
+
+      if (isUpdated) {
+        fetchProtectedData();
+      }
     }
 
     setOpen(false);

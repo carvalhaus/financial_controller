@@ -46,11 +46,16 @@ function ContextApiProvider({ children }) {
 
   react.useEffect(() => {
     fetchProtectedData();
-  }, [userData]);
+  }, []);
 
   return (
     <ContextApi.Provider
-      value={{ userData, setUserData, fetchWithCredentials }}
+      value={{
+        userData,
+        setUserData,
+        fetchWithCredentials,
+        fetchProtectedData,
+      }}
     >
       {children}
     </ContextApi.Provider>
