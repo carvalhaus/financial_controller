@@ -59,6 +59,37 @@ const categoryService = {
       throw new Error("Não foi possível recuperar as categorias.");
     }
   },
+
+  getCategory: async (id) => {
+    try {
+      const category = await prisma.category.findUnique({
+        where: { id },
+        include: {
+          Expense: true,
+        },
+      });
+
+      if (!category) {
+        throw new Error("Categoria não cadastrada!");
+      }
+
+      const totalSpent = category.Expense.reduce(
+        (sum, expense) => sum + expense.amount,
+        0
+      );
+
+      const totalExpenses = category.Expense.length;
+
+      return {
+        ...category,
+        totalSpent,
+        totalExpenses,
+      };
+    } catch (error) {
+      console.error("Erro ao buscar categoria:", error);
+      throw new Error("Não foi possível recuperar a categoria.");
+    }
+  },
 };
 
 module.exports = categoryService;

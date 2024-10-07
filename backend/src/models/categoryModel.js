@@ -4,6 +4,10 @@ const getCategories = z.object({
   userId: z.string().uuid(),
 });
 
+const getCategory = z.object({
+  id: z.string().uuid(),
+});
+
 const createCategorySchema = z.object({
   userId: z.string().uuid(),
   icon: z.string(),
@@ -11,4 +15,4 @@ const createCategorySchema = z.object({
   amount: z.number(),
 });
 
-module.exports = { getCategories, createCategorySchema };
+module.exports = { getCategories, getCategory, createCategorySchema };

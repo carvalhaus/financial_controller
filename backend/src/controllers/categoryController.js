@@ -27,6 +27,20 @@ const categoryController = {
       res.status(500).json({ error: error.message });
     }
   },
+
+  getCategory: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const category = await categoryService.getCategory(id);
+
+      res.status(200).json({
+        message: "Categoria recebida com sucesso!",
+        category,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = categoryController;

@@ -2,6 +2,7 @@ const { ZodError } = require("zod");
 const {
   createCategorySchema,
   getCategories,
+  getCategory,
 } = require("../models/categoryModel");
 
 const validateCreateCategory = (req, res, next) => {
@@ -30,4 +31,22 @@ const validateGetCategories = (req, res, next) => {
   }
 };
 
-module.exports = { validateCreateCategory, validateGetCategories };
+const validateGetCategory = (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    getCategory.parse({ id });
+    next();
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({ errors: error.errors });
+    }
+    next(error);
+  }
+};
+
+module.exports = {
+  validateCreateCategory,
+  validateGetCategories,
+  validateGetCategory,
+};
