@@ -30,13 +30,30 @@ const categoryService = {
         where: {
           userId: userId,
         },
+        include: {
+          Expense: true,
+        },
       });
 
       if (categories.length === 0) {
         throw new Error("Usuário não possui nenhuma categoria cadastrada!");
       }
 
-      return categories;
+      const processedCategories = categories.map((category) => {
+        const totalSpent = category.Expense.reduce(
+          (sum, expense) => sum + expense.amount,
+          0
+        );
+        const totalExpenses = category.Expense.length;
+
+        return {
+          ...category,
+          totalSpent,
+          totalExpenses,
+        };
+      });
+
+      return processedCategories;
     } catch (error) {
       console.error("Erro ao buscar categorias:", error);
       throw new Error("Não foi possível recuperar as categorias.");
