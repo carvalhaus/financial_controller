@@ -49,7 +49,9 @@ function ContextApiProvider({ children }) {
   }, [userData]);
 
   return (
-    <ContextApi.Provider value={{ userData, setUserData }}>
+    <ContextApi.Provider
+      value={{ userData, setUserData, fetchWithCredentials }}
+    >
       {children}
     </ContextApi.Provider>
   );

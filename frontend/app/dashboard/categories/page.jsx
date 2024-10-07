@@ -1,5 +1,3 @@
-"use client";
-
 import DashboardsHeader from "../_components/dashboardsHeader";
 import CategoriesList from "./_components/categoriesList";
 
