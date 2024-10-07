@@ -9,17 +9,89 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useApi } from "@/contexts/contextApi";
+import { useToast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import EmojiPicker from "emoji-picker-react";
 import react from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const addCategoryFormSchema = z.object({
+  name: z.string().min(4, { message: "Esse campo é obrigatório" }),
+  amount: z.coerce
+    .number()
+    .positive({ message: "O limite deve ser maior que zero" }),
+});
 
 function AddCategory() {
+  const { toast } = useToast();
+
   const [emojiIcon, setEmojiIcon] = react.useState("🙄");
   const [openEmojiPicker, setOpenEmojiPicker] = react.useState(false);
+  const { userData } = useApi();
+
+  const [open, setOpen] = react.useState(false);
+
+  const addCategoryForm = useForm({
+    resolver: zodResolver(addCategoryFormSchema),
+    defaultValues: {
+      name: "",
+      amount: "",
+    },
+  });
+
+  async function onSubmit(values) {
+    const combinedValues = {
+      userId: userData.id,
+      icon: emojiIcon,
+      ...values,
+    };
+
+    const errorToast = (err) => {
+      toast({
+        title: `${err}`,
+        variant: "destructive",
+      });
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/categories/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(combinedValues),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao criar categoria.");
+      }
+
+      console.log("Categoria criada com sucesso!");
+
+      addCategoryForm.reset();
+      setOpen(false);
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      errorToast(error.message);
+    }
+  }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="md:w-2/3 lg:w-96">
         <div className="flex items-center justify-center bg-white border border-softGray rounded-md drop-shadow lg:w-96 h-[158px] md:h-[174px] text-4xl cursor-pointer hover:drop-shadow-lg transition duration-150 ease-out hover:ease-in">
           &#43;
@@ -34,7 +106,7 @@ function AddCategory() {
           </DialogDescription>
         </DialogHeader>
 
-        <form className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
           <div>
             <Button
               variant="outline"
@@ -57,17 +129,52 @@ function AddCategory() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <Label htmlFor="name">Nome</Label>
-            <Input id="name" defaultValue="" placeholder="Saúde" />
-          </div>
-          <div className="flex flex-col gap-4">
-            <Label htmlFor="limit">Limite da categoria</Label>
-            <Input id="limit" defaultValue="" placeholder="R$ 300,00" />
-          </div>
+          <Form {...addCategoryForm}>
+            <form
+              onSubmit={addCategoryForm.handleSubmit(onSubmit)}
+              className="flex flex-col gap-4"
+            >
+              <FormField
+                control={addCategoryForm.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base">
+                      Nome da categoria
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="ex. Moradia" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <Button>Criar</Button>
-        </form>
+              <FormField
+                control={addCategoryForm.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base">
+                      Limite da categoria
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="ex. R$ 300,00"
+                        type="number"
+                        min="1"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button className="w-full text-lg">Criar</Button>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );
