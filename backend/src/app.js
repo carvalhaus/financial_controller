@@ -5,6 +5,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const protectedRoutes = require("./routes/protectedRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -22,6 +23,7 @@ app.use(
 app.use(authRoutes);
 app.use("/api", protectedRoutes);
 app.use(userRoutes);
+app.use(categoryRoutes);
 
 app.post("/api/clear-cookies", (req, res) => {
   res.clearCookie("token");
