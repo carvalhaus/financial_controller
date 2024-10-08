@@ -80,10 +80,19 @@ function EditCategory({ category, fetchProtectedData }) {
   }
 
   async function onSubmit(values) {
-    const updatedValues = { id: category.id, icon: emojiIcon, ...values };
+    const updatedValues = { id: category.id, ...values, icon: emojiIcon };
+
+    console.log("Dados enviados:", updatedValues);
+
+    const categoryComparable = {
+      id: category.id,
+      name: category.name,
+      amount: category.amount,
+      icon: category.icon,
+    };
 
     const comparedData =
-      JSON.stringify(category) === JSON.stringify(updatedValues);
+      JSON.stringify(categoryComparable) === JSON.stringify(updatedValues);
 
     if (!comparedData) {
       console.log("Atualizando dados");
@@ -175,7 +184,7 @@ function EditCategory({ category, fetchProtectedData }) {
                 )}
               />
 
-              <Button className="w-full text-lg">Criar</Button>
+              <Button className="w-full text-lg">Editar</Button>
             </form>
           </Form>
         </div>

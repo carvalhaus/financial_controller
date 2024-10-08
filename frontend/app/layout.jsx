@@ -1,7 +1,7 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
-import ContextApiProvider from "@/contexts/contextApi";
+
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -33,9 +33,7 @@ export default function RootLayout({ children }) {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="Portuguese" />
       </Head>
-      <body className={`${roboto.className} text-primary`}>
-        <ContextApiProvider>{children}</ContextApiProvider>
-      </body>
+      <body className={`${roboto.className} text-primary`}>{children}</body>
     </html>
   );
 }

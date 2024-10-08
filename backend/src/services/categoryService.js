@@ -113,7 +113,7 @@ const categoryService = {
     }
 
     if (icon && icon !== existingCategory.icon) {
-      fieldsToUpdate.birthday = icon;
+      fieldsToUpdate.icon = icon;
     }
 
     if (Object.keys(fieldsToUpdate).length === 0) {
