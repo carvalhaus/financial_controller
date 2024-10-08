@@ -90,6 +90,44 @@ const categoryService = {
       throw new Error("Não foi possível recuperar a categoria.");
     }
   },
+
+  updateCategory: async (category) => {
+    const { id, name, amount, icon } = category;
+
+    const existingCategory = await prisma.category.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      throw new Error("Categoria não encontrada!");
+    }
+
+    const fieldsToUpdate = {};
+
+    if (name && name !== existingCategory.name) {
+      fieldsToUpdate.name = name;
+    }
+
+    if (amount && amount !== existingCategory.amount) {
+      fieldsToUpdate.amount = amount;
+    }
+
+    if (icon && icon !== existingCategory.icon) {
+      fieldsToUpdate.birthday = icon;
+    }
+
+    if (Object.keys(fieldsToUpdate).length === 0) {
+      console.log("Nenhuma alteração foi feita");
+      return existingCategory;
+    }
+
+    const updatedCategory = await prisma.category.update({
+      where: { id },
+      data: fieldsToUpdate,
+    });
+
+    return updatedCategory;
+  },
 };
 
 module.exports = categoryService;

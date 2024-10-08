@@ -3,6 +3,7 @@ const {
   createCategorySchema,
   getCategories,
   getCategory,
+  updateCategorySchema,
 } = require("../models/categoryModel");
 
 const validateCreateCategory = (req, res, next) => {
@@ -45,8 +46,21 @@ const validateGetCategory = (req, res, next) => {
   }
 };
 
+const validateUpdateCategory = (req, res, next) => {
+  try {
+    updateCategorySchema.parse(req.body);
+    next();
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({ errors: error.errors });
+    }
+    next(error);
+  }
+};
+
 module.exports = {
   validateCreateCategory,
   validateGetCategories,
   validateGetCategory,
+  validateUpdateCategory,
 };

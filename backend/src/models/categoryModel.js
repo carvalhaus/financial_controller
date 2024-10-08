@@ -15,4 +15,11 @@ const createCategorySchema = z.object({
   amount: z.number(),
 });
 
-module.exports = { getCategories, getCategory, createCategorySchema };
+const updateCategorySchema = z.object({
+  id: z.string().uuid(),
+  icon: z.string(),
+  name: z.string().min(4),
+  amount: z.number(),
+});
+
+module.exports = { getCategories, getCategory, createCategorySchema, updateCategorySchema };

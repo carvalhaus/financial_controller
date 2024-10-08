@@ -3,6 +3,7 @@ const {
   validateCreateCategory,
   validateGetCategories,
   validateGetCategory,
+  validateUpdateCategory,
 } = require("../middleware/categoryMiddleware");
 const categoryController = require("../controllers/categoryController");
 
@@ -24,6 +25,12 @@ router.post(
   "/api/categories/create",
   validateCreateCategory,
   categoryController.createCategory
+);
+
+router.post(
+  "/api/categories/update",
+  validateUpdateCategory,
+  categoryController.updateCategory
 );
 
 module.exports = router;
