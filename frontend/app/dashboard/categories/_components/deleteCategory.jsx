@@ -10,8 +10,35 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-function DeleteCategory() {
+function DeleteCategory({ id }) {
+  const router = useRouter();
+
+  async function onDelete() {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/categories/category/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao deletar a categoria!");
+      }
+
+      console.log("Categoria deletada com sucesso!");
+
+      router.push("/dashboard/categories");
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className="w-full">
@@ -34,6 +61,7 @@ function DeleteCategory() {
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
             className={buttonVariants({ variant: "destructive" })}
+            onClick={onDelete}
           >
             Excluir
           </AlertDialogAction>

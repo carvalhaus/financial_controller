@@ -28,7 +28,7 @@ function CategorySelected({ params }) {
 
   const fetchProtectedData = async () => {
     try {
-      console.log("Get Caregory: " + id);
+      console.log("Get Category: " + id);
       const categoryResponse = await fetchWithCredentials(
         `${BASE_URL}/api/categories/category/${id}`
       );
@@ -77,8 +77,11 @@ function CategorySelected({ params }) {
             />
 
             <div className="flex gap-4 md:w-2/3">
-              <DeleteCategory />
-              <EditCategory />
+              <DeleteCategory id={id} />
+              <EditCategory
+                category={category}
+                fetchProtectedData={fetchProtectedData}
+              />
             </div>
           </div>
 

@@ -9,17 +9,97 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { zodResolver } from "@hookform/resolvers/zod";
 import EmojiPicker from "emoji-picker-react";
 import react from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-function EditCategory() {
-  const [emojiIcon, setEmojiIcon] = react.useState("🙄");
+const editCategoryFormSchema = z.object({
+  name: z.string().min(4, { message: "Esse campo é obrigatório" }),
+  amount: z.coerce
+    .number()
+    .positive({ message: "O limite deve ser maior que zero" }),
+});
+
+function EditCategory({ category, fetchProtectedData }) {
+  const [open, setOpen] = react.useState(false);
+  const [emojiIcon, setEmojiIcon] = react.useState(category?.icon);
   const [openEmojiPicker, setOpenEmojiPicker] = react.useState(false);
 
+  const editCategoryForm = useForm({
+    resolver: zodResolver(editCategoryFormSchema),
+    defaultValues: {
+      name: category?.name,
+      amount: category?.amount,
+    },
+  });
+
+  react.useEffect(() => {
+    if (category) {
+      editCategoryForm.reset({
+        name: category.name,
+        amount: category.amount,
+      });
+      setEmojiIcon(category.icon);
+    }
+  }, [category, editCategoryForm]);
+
+  async function updateCategory(data) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/categories/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar os dados!");
+      }
+
+      console.log("Dados atualizados com sucesso!");
+      return true;
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      return false;
+    }
+  }
+
+  async function onSubmit(values) {
+    const updatedValues = { id: category.id, icon: emojiIcon, ...values };
+
+    const comparedData =
+      JSON.stringify(category) === JSON.stringify(updatedValues);
+
+    if (!comparedData) {
+      console.log("Atualizando dados");
+
+      const isUpdated = await updateCategory(updatedValues);
+
+      if (isUpdated) {
+        fetchProtectedData();
+      }
+    }
+
+    setOpen(false);
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="w-full">
         <Button className="w-full">Editar categoria</Button>
       </DialogTrigger>
@@ -30,7 +110,7 @@ function EditCategory() {
           <DialogDescription>Edite a categoria selecionada</DialogDescription>
         </DialogHeader>
 
-        <form className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
           <div>
             <Button
               variant="outline"
@@ -53,17 +133,52 @@ function EditCategory() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <Label htmlFor="name">Nome</Label>
-            <Input id="name" defaultValue="" placeholder="Saúde" />
-          </div>
-          <div className="flex flex-col gap-4">
-            <Label htmlFor="limit">Limite da categoria</Label>
-            <Input id="limit" defaultValue="" placeholder="R$ 300,00" />
-          </div>
+          <Form {...editCategoryForm}>
+            <form
+              onSubmit={editCategoryForm.handleSubmit(onSubmit)}
+              className="flex flex-col gap-4"
+            >
+              <FormField
+                control={editCategoryForm.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base">
+                      Nome da categoria
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="ex. Moradia" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <Button>Editar</Button>
-        </form>
+              <FormField
+                control={editCategoryForm.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base">
+                      Limite da categoria
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="ex. R$ 300,00"
+                        type="number"
+                        min="1"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button className="w-full text-lg">Criar</Button>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );
