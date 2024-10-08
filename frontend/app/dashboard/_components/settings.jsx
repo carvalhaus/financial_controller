@@ -72,7 +72,7 @@ function SettingsModal({ userData }) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/users/update`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -80,13 +80,12 @@ function SettingsModal({ userData }) {
         }
       );
 
-      if (response.ok) {
-        console.log("Dados atualizados com sucesso!");
-        return true;
-      } else {
-        console.error("Erro ao atualizar os dados.");
-        return false;
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar os dados!");
       }
+
+      console.log("Dados atualizados com sucesso!");
+      return true;
     } catch (error) {
       console.error("Erro na requisição:", error);
       return false;
