@@ -4,6 +4,7 @@ const {
   validateGetCategories,
   validateGetCategory,
   validateUpdateCategory,
+  validateDeleteCategory,
 } = require("../middleware/categoryMiddleware");
 const categoryController = require("../controllers/categoryController");
 
@@ -31,6 +32,12 @@ router.post(
   "/api/categories/update",
   validateUpdateCategory,
   categoryController.updateCategory
+);
+
+router.delete(
+  "/api/categories/category/delete/:id",
+  validateDeleteCategory,
+  categoryController.deleteCategory
 );
 
 module.exports = router;

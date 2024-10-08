@@ -22,4 +22,14 @@ const updateCategorySchema = z.object({
   amount: z.number(),
 });
 
-module.exports = { getCategories, getCategory, createCategorySchema, updateCategorySchema };
+const deleteCategorySchema = z.object({
+  id: z.string().uuid(),
+});
+
+module.exports = {
+  getCategories,
+  getCategory,
+  createCategorySchema,
+  updateCategorySchema,
+  deleteCategorySchema,
+};

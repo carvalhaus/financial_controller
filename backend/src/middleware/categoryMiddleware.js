@@ -4,6 +4,7 @@ const {
   getCategories,
   getCategory,
   updateCategorySchema,
+  deleteCategorySchema,
 } = require("../models/categoryModel");
 
 const validateCreateCategory = (req, res, next) => {
@@ -58,9 +59,24 @@ const validateUpdateCategory = (req, res, next) => {
   }
 };
 
+const validateDeleteCategory = (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    deleteCategorySchema.parse({ id });
+    next();
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({ errors: error.errors });
+    }
+    next(error);
+  }
+};
+
 module.exports = {
   validateCreateCategory,
   validateGetCategories,
   validateGetCategory,
   validateUpdateCategory,
+  validateDeleteCategory,
 };

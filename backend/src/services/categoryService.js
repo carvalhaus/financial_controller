@@ -128,6 +128,36 @@ const categoryService = {
 
     return updatedCategory;
   },
+
+  deleteCategory: async (id) => {
+    try {
+      const category = await prisma.category.findUnique({
+        where: { id },
+        include: {
+          Expense: true,
+        },
+      });
+
+      if (!category) {
+        throw new Error("Categoria não cadastrada!");
+      }
+
+      await prisma.expense.deleteMany({
+        where: {
+          categoryId: id,
+        },
+      });
+
+      await prisma.category.delete({
+        where: { id },
+      });
+
+      return { message: "Categoria e despesas deletadas com sucesso!" };
+    } catch (error) {
+      console.error("Erro ao deletar categoria:", error);
+      throw new Error("Não foi possível deletar a categoria.");
+    }
+  },
 };
 
 module.exports = categoryService;
