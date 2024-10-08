@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.get("/api/users/:userId", validateGetUser, userController.getUser);
 
-router.post("/api/users/update", validateUpdateUser, userController.updateUser);
+router.put("/api/users/update", validateUpdateUser, userController.updateUser);
 
 module.exports = router;

@@ -28,7 +28,7 @@ router.post(
   categoryController.createCategory
 );
 
-router.post(
+router.put(
   "/api/categories/update",
   validateUpdateCategory,
   categoryController.updateCategory
