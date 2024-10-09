@@ -33,6 +33,13 @@ const expenseService = {
         where: {
           userId,
         },
+        include: {
+          category: {
+            select: {
+              name: true,
+            },
+          },
+        },
       });
 
       if (expenses.length === 0) {
