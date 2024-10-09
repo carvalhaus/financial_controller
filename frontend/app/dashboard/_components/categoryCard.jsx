@@ -1,5 +1,4 @@
 import { Progress } from "@/components/ui/progress";
-import Image from "next/image";
 import Link from "next/link";
 
 function CategoryCard({ id, icon, name, totalExpenses, amount, totalSpent }) {
@@ -16,7 +15,7 @@ function CategoryCard({ id, icon, name, totalExpenses, amount, totalSpent }) {
 
   return (
     <Link
-      href={`categories/${id}`}
+      href={`/dashboard/categories/${id}`}
       className="flex flex-col items-center gap-4 p-2 md:py-4 md:px-6 md:w-2/3 lg:w-96 bg-white border border-softGray rounded-md drop-shadow w-auto cursor-pointer hover:drop-shadow-lg transition duration-150 ease-out hover:ease-in"
     >
       <div className="flex justify-between items-center w-full">

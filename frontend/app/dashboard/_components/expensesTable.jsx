@@ -9,6 +9,7 @@ import {
 import EditExpense from "./editExpense";
 import DeleteExpense from "./deleteExpense";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export function ExpensesTable({ expenses }) {
   const pathname = usePathname();
@@ -43,30 +44,39 @@ export function ExpensesTable({ expenses }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {expenses?.map((expense) => (
-          <TableRow key={expense?.id}>
-            <TableCell>{expense?.name}</TableCell>
-            <TableCell className="px-0">
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(expense?.amount)}
-            </TableCell>
-            {hasCategories || (
-              <TableCell className="px-0">{expense?.category?.name}</TableCell>
-            )}
-            <TableCell className="hidden md:table-cell">
-              {new Date(expense?.createdAt).toLocaleDateString("pt-BR")}
-            </TableCell>
-            {isDashboard || (
-              <TableCell className="flex items-center justify-center gap-3 h-full align-middle">
-                <EditExpense expense={expense} />
-
-                <DeleteExpense expense={expense} />
+        {expenses
+          ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .map((expense) => (
+            <TableRow key={expense?.id}>
+              <TableCell>{expense?.name}</TableCell>
+              <TableCell className="px-0">
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(expense?.amount)}
               </TableCell>
-            )}
-          </TableRow>
-        ))}
+              {hasCategories || (
+                <TableCell className="px-0">
+                  <Link
+                    href={`/dashboard/categories/${expense?.category?.id}`}
+                    className="hover:font-medium"
+                  >
+                    {expense?.category?.name}
+                  </Link>
+                </TableCell>
+              )}
+              <TableCell className="hidden md:table-cell">
+                {new Date(expense?.createdAt).toLocaleDateString("pt-BR")}
+              </TableCell>
+              {isDashboard || (
+                <TableCell className="flex items-center justify-center gap-3 h-full align-middle">
+                  <EditExpense expense={expense} />
+
+                  <DeleteExpense expense={expense} />
+                </TableCell>
+              )}
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   );

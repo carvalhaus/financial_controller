@@ -84,7 +84,7 @@ function CategorySelected({ params }) {
             </div>
           </div>
 
-          <AddExpense id={id} />
+          <AddExpense id={id} fetchProtectedData={fetchProtectedData} />
         </div>
 
         <div className="py-4 text-center">

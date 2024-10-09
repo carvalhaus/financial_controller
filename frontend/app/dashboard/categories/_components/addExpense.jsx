@@ -22,7 +22,7 @@ const createExpenseFormSchema = z.object({
     .positive({ message: "O limite deve ser maior que zero" }),
 });
 
-function AddExpense({ id }) {
+function AddExpense({ id, fetchProtectedData }) {
   const { toast } = useToast();
 
   const createExpenseForm = useForm({
@@ -65,6 +65,7 @@ function AddExpense({ id }) {
       console.log("Despesa criada com sucesso!");
 
       createExpenseForm.reset();
+      fetchProtectedData();
     } catch (error) {
       console.error("Erro na requisição:", error);
       errorToast(error.message);

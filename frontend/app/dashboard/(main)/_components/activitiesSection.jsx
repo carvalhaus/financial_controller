@@ -1,12 +1,18 @@
 import ExpensesChart from "./expensesChart";
 import LastCategories from "./lastCategories";
 
-function ActivitiesSection() {
+function ActivitiesSection({ userData }) {
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
+  const { categories, expenses } = userData;
+
   return (
     <section className="flex flex-col items-center lg:flex-row gap-4 py-5 md:justify-evenly w-full">
-      <ExpensesChart />
+      <ExpensesChart categories={categories}/>
 
-      <LastCategories />
+      <LastCategories categories={categories} />
     </section>
   );
 }

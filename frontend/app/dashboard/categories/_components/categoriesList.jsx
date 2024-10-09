@@ -37,9 +37,7 @@ function CategoriesList() {
 
   return (
     <div className="flex-1 p-4 w-full">
-      <div className="flex flex-col justify-center md:flex-row md:flex-wrap gap-4 2xl:gap-5 w-full">
-        <AddCategory fetchProtectedData={fetchProtectedData} />
-
+      <div className="flex flex-col-reverse justify-center md:flex-row-reverse md:flex-wrap-reverse gap-4 2xl:gap-5 w-full">
         {categories?.map((category) => (
           <CategoryCard
             key={category.id}
@@ -51,6 +49,8 @@ function CategoriesList() {
             totalSpent={category.totalSpent}
           />
         ))}
+
+        <AddCategory fetchProtectedData={fetchProtectedData} />
       </div>
     </div>
   );
