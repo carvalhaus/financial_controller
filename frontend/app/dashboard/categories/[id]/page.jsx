@@ -85,7 +85,7 @@ function CategorySelected({ params }) {
             </div>
           </div>
 
-          <AddExpense />
+          <AddExpense id={id} />
         </div>
 
         <div className="py-4 text-center">

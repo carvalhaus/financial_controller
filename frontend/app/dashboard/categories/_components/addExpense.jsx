@@ -1,12 +1,75 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-function AddExpense() {
+const createExpenseFormSchema = z.object({
+  name: z.string().min(4, { message: "Esse campo é obrigatório" }),
+  amount: z.coerce
+    .number()
+    .positive({ message: "O limite deve ser maior que zero" }),
+});
+
+function AddExpense({ id }) {
   const { toast } = useToast();
+
+  const createExpenseForm = useForm({
+    resolver: zodResolver(createExpenseFormSchema),
+    defaultValues: {
+      name: "",
+      amount: "",
+    },
+  });
+
+  const errorToast = (err) => {
+    toast({
+      title: `${err}`,
+      variant: "destructive",
+    });
+  };
+
+  async function onSubmit(values) {
+    const combinedValues = {
+      ...values,
+      categoryId: id,
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/expenses/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(combinedValues),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao criar despesa.");
+      }
+
+      console.log("Despesa criada com sucesso!");
+
+      createExpenseForm.reset();
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      errorToast(error.message);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-4 py-4 px-6 bg-white border border-softGray rounded-md drop-shadow w-full md:w-96">
@@ -14,28 +77,47 @@ function AddExpense() {
         Adicionar despesa
       </h2>
 
-      <form className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4">
-          <Label htmlFor="name">Name</Label>
-          <Input id="name" defaultValue="" />
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <Label htmlFor="username">Valor</Label>
-          <Input id="username" defaultValue="" />
-        </div>
-
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            toast({
-              title: "Sua despesa foi adicionada com sucesso!",
-            });
-          }}
+      <Form {...createExpenseForm}>
+        <form
+          onSubmit={createExpenseForm.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
         >
-          Adicionar
-        </Button>
-      </form>
+          <FormField
+            control={createExpenseForm.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base">Nome da despesa</FormLabel>
+                <FormControl>
+                  <Input placeholder="ex. Açaí" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={createExpenseForm.control}
+            name="amount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base">Valor da despesa</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="ex. R$ 20,00"
+                    type="number"
+                    min="1"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button className="w-full text-lg">Adicionar</Button>
+        </form>
+      </Form>
     </div>
   );
 }

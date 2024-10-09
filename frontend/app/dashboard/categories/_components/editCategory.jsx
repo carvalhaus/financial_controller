@@ -82,8 +82,6 @@ function EditCategory({ category, fetchProtectedData }) {
   async function onSubmit(values) {
     const updatedValues = { id: category.id, ...values, icon: emojiIcon };
 
-    console.log("Dados enviados:", updatedValues);
-
     const categoryComparable = {
       id: category.id,
       name: category.name,
