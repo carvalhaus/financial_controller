@@ -1,13 +1,39 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import DashboardsHeader from "../_components/dashboardsHeader";
 import { ExpensesTable } from "../_components/expensesTable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import react from "react";
+import { useApi } from "@/contexts/contextApi";
 
 function Expenses() {
-  const pathname = usePathname();
+  const { fetchWithCredentials } = useApi();
+
+  const BASE_URL = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}`;
+
+  const [expenses, setExpenses] = react.useState(null);
+
+  const fetchProtectedData = async () => {
+    try {
+      const protectedData = await fetchWithCredentials(
+        `${BASE_URL}/api/protected`
+      );
+
+      console.log("GET EXPENSES");
+      const expensesResponse = await fetchWithCredentials(
+        `${BASE_URL}/api/expenses/${protectedData.userId}`
+      );
+
+      setExpenses(expensesResponse.expenses);
+    } catch (err) {
+      console.error("Erro inesperado:", err);
+      router.push("/login");
+    }
+  };
+
+  react.useEffect(() => {
+    fetchProtectedData();
+  }, []);
 
   return (
     <div className="h-full flex flex-col">
@@ -21,7 +47,7 @@ function Expenses() {
         </h3>
 
         <ScrollArea className="rounded-md">
-          <ExpensesTable pathname={pathname} />
+          <ExpensesTable expenses={expenses} />
         </ScrollArea>
       </div>
     </div>

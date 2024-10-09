@@ -28,7 +28,6 @@ function CategorySelected({ params }) {
 
   const fetchProtectedData = async () => {
     try {
-      console.log("Get Category: " + id);
       const categoryResponse = await fetchWithCredentials(
         `${BASE_URL}/api/categories/category/${id}`
       );
@@ -97,7 +96,7 @@ function CategorySelected({ params }) {
             className="rounded-md"
             style={{ height: `${windowDimensions.height - 520}px` }}
           >
-            <ExpensesTable />
+            <ExpensesTable expenses={category?.Expense} />
           </ScrollArea>
         </div>
       </div>

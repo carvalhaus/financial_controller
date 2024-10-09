@@ -4,7 +4,10 @@ import Link from "next/link";
 
 function CategoryCard({ id, icon, name, totalExpenses, amount, totalSpent }) {
   function realCurrency(value) {
-    return parseFloat(value).toFixed(2).replace(".", ",");
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(value);
   }
 
   function calculatePercentageSpent(spent, limit) {
@@ -31,7 +34,7 @@ function CategoryCard({ id, icon, name, totalExpenses, amount, totalSpent }) {
           </div>
         </div>
         <p className="scroll-m-20 text-lg font-medium tracking-tight">
-          R$ {realCurrency(amount)}
+          {realCurrency(amount)}
         </p>
       </div>
 
@@ -39,12 +42,12 @@ function CategoryCard({ id, icon, name, totalExpenses, amount, totalSpent }) {
         <div className="flex justify-between text-sm">
           <div>
             <p className="font-medium">Gasto</p>
-            <p>R$ {realCurrency(totalSpent)}</p>
+            <p>{realCurrency(totalSpent)}</p>
           </div>
 
           <div>
             <p className="font-medium">Restante</p>
-            <p>R$ {realCurrency(amount - totalSpent)}</p>
+            <p>{realCurrency(amount - totalSpent)}</p>
           </div>
         </div>
 
