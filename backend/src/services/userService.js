@@ -15,11 +15,38 @@ const userService = {
           orderBy: {
             createdAt: "desc",
           },
+          select: {
+            id: true,
+            name: true,
+            amount: true,
+            createdAt: true,
+            category: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
         },
         categories: {
           take: 3,
           orderBy: {
             createdAt: "desc",
+          },
+          select: {
+            id: true,
+            name: true,
+            createdAt: true,
+            amount: true,
+            icon: true,
+            _count: {
+              select: { Expense: true },
+            },
+            Expense: {
+              select: {
+                amount: true,
+              },
+            },
           },
         },
       },
@@ -29,7 +56,21 @@ const userService = {
       throw new Error("Usuário não cadastrado!");
     }
 
-    return existingUser;
+    const categoriesWithTotals = existingUser.categories.map((category) => {
+      const totalSpent = category.Expense.reduce(
+        (total, expense) => total + expense.amount,
+        0
+      );
+      return {
+        ...category,
+        totalSpent,
+      };
+    });
+
+    return {
+      ...existingUser,
+      categories: categoriesWithTotals,
+    };
   },
 
   updateUser: async (userData) => {
