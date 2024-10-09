@@ -26,6 +26,25 @@ const expenseService = {
 
     return newExpense;
   },
+
+  getAllExpenses: async (userId) => {
+    try {
+      const expenses = await prisma.expense.findMany({
+        where: {
+          userId,
+        },
+      });
+
+      if (expenses.length === 0) {
+        throw new Error("Usuário não possui nenhuma despesa cadastrada!");
+      }
+
+      return expenses;
+    } catch (error) {
+      console.error("Erro ao buscar categorias:", error);
+      throw new Error("Não foi possível recuperar as categorias.");
+    }
+  },
 };
 
 module.exports = expenseService;

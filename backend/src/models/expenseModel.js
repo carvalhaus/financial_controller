@@ -6,4 +6,8 @@ const createExpenseSchema = z.object({
   categoryId: z.string().uuid(),
 });
 
-module.exports = { createExpenseSchema };
+const getAllExpensesSchema = z.object({
+  userId: z.string().uuid(),
+});
+
+module.exports = { createExpenseSchema, getAllExpensesSchema };

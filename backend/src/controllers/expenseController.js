@@ -13,6 +13,20 @@ const expenseController = {
       res.status(500).json({ error: error.message });
     }
   },
+
+  getAllExpenses: async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const expenses = await expenseService.getAllExpenses(userId);
+
+      res.status(200).json({
+        message: "Despesas recebidas com sucesso!",
+        expenses,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = expenseController;
