@@ -27,6 +27,19 @@ const expenseController = {
       res.status(500).json({ error: error.message });
     }
   },
+
+  updateExpense: async (req, res) => {
+    try {
+      const updateExpense = await expenseService.updateExpense(req.body);
+
+      res.status(200).json({
+        message: "Despesa editada com sucesso!",
+        updateExpense,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = expenseController;

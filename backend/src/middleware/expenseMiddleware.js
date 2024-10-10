@@ -2,6 +2,7 @@ const { ZodError } = require("zod");
 const {
   createExpenseSchema,
   getAllExpensesSchema,
+  updateExpenseSchema,
 } = require("../models/expenseModel");
 
 const validateCreateExpense = (req, res, next) => {
@@ -30,4 +31,20 @@ const validateGetAllExpenses = (req, res, next) => {
   }
 };
 
-module.exports = { validateCreateExpense, validateGetAllExpenses };
+const validateUpdateExpense = (req, res, next) => {
+  try {
+    updateExpenseSchema.parse(req.body);
+    next();
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({ errors: error.errors });
+    }
+    next(error);
+  }
+};
+
+module.exports = {
+  validateCreateExpense,
+  validateGetAllExpenses,
+  validateUpdateExpense,
+};

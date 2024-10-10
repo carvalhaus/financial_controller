@@ -49,8 +49,49 @@ const expenseService = {
 
       return expenses;
     } catch (error) {
-      console.error("Erro ao buscar categorias:", error);
-      throw new Error("Não foi possível recuperar as categorias.");
+      console.error("Erro ao buscar despesas:", error);
+      throw new Error("Não foi possível recuperar as despesas.");
+    }
+  },
+
+  updateExpense: async (expense) => {
+    try {
+      const { id, name, amount } = expense;
+
+      const existingExpense = prisma.expense.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (!existingExpense) {
+        throw new Error("Despesa não encontrada!");
+      }
+
+      const fieldsToUpdate = {};
+
+      if (name && name !== existingExpense.name) {
+        fieldsToUpdate.name = name;
+      }
+
+      if (amount && amount !== existingExpense.amount) {
+        fieldsToUpdate.amount = amount;
+      }
+
+      if (Object.keys(fieldsToUpdate).length === 0) {
+        console.log("Nenhuma alteração foi feita");
+        return existingExpense;
+      }
+
+      const updatedExpense = await prisma.expense.update({
+        where: { id },
+        data: fieldsToUpdate,
+      });
+
+      return updatedExpense;
+    } catch (error) {
+      console.error("Erro ao buscar despesas:", error);
+      throw new Error("Não foi possível recuperar as despesas.");
     }
   },
 };
