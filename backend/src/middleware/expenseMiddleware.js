@@ -3,6 +3,7 @@ const {
   createExpenseSchema,
   getAllExpensesSchema,
   updateExpenseSchema,
+  deleteExpenseSchema,
 } = require("../models/expenseModel");
 
 const validateCreateExpense = (req, res, next) => {
@@ -43,8 +44,23 @@ const validateUpdateExpense = (req, res, next) => {
   }
 };
 
+const validateDeleteExpense = (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    deleteExpenseSchema.parse({ id });
+    next();
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({ errors: error.errors });
+    }
+    next(error);
+  }
+};
+
 module.exports = {
   validateCreateExpense,
   validateGetAllExpenses,
   validateUpdateExpense,
+  validateDeleteExpense,
 };

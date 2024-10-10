@@ -40,6 +40,20 @@ const expenseController = {
       res.status(500).json({ error: error.message });
     }
   },
+
+  deleteExpense: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const expense = await expenseService.deleteExpense(id);
+
+      res.status(200).json({
+        message: "Despesa deletada com sucesso!",
+        expense,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = expenseController;

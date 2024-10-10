@@ -3,6 +3,7 @@ const {
   validateCreateExpense,
   validateGetAllExpenses,
   validateUpdateExpense,
+  validateDeleteExpense,
 } = require("../middleware/expenseMiddleware");
 const expenseController = require("../controllers/expenseController");
 
@@ -24,6 +25,12 @@ router.put(
   "/api/expenses/update",
   validateUpdateExpense,
   expenseController.updateExpense
+);
+
+router.delete(
+  "/api/expenses/expense/delete/:id",
+  validateDeleteExpense,
+  expenseController.deleteExpense
 );
 
 module.exports = router;

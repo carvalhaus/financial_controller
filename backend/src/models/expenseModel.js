@@ -16,4 +16,13 @@ const updateExpenseSchema = z.object({
   amount: z.number(),
 });
 
-module.exports = { createExpenseSchema, getAllExpensesSchema, updateExpenseSchema };
+const deleteExpenseSchema = z.object({
+  id: z.string().uuid(),
+});
+
+module.exports = {
+  createExpenseSchema,
+  getAllExpensesSchema,
+  updateExpenseSchema,
+  deleteExpenseSchema,
+};

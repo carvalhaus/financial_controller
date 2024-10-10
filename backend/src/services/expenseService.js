@@ -50,7 +50,7 @@ const expenseService = {
       return expenses;
     } catch (error) {
       console.error("Erro ao buscar despesas:", error);
-      throw new Error("Não foi possível recuperar as despesas.");
+      throw new Error(error.message);
     }
   },
 
@@ -90,8 +90,31 @@ const expenseService = {
 
       return updatedExpense;
     } catch (error) {
-      console.error("Erro ao buscar despesas:", error);
-      throw new Error("Não foi possível recuperar as despesas.");
+      console.error("Erro ao atualizar despesas:", error);
+      throw new Error(error.message);
+    }
+  },
+
+  deleteExpense: async (id) => {
+    try {
+      const existingExpense = await prisma.expense.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (!existingExpense) {
+        throw new Error("Despesa não cadastrada ou já deletada!");
+      }
+
+      await prisma.expense.delete({
+        where: {
+          id: existingExpense.id,
+        },
+      });
+    } catch (error) {
+      console.error("Erro ao deletar despesas:", error);
+      throw new Error(error.message);
     }
   },
 };
