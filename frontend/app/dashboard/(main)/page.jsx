@@ -7,11 +7,15 @@ import ActivitiesSection from "./_components/activitiesSection";
 
 import SummarySection from "./_components/summarySection";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import React from "react";
 
 function MainDashboard() {
-  const { userData } = useApi();
+  const { userData, fetchProtectedData } = useApi();
 
-  console.log(userData);
+  React.useEffect(() => {
+    fetchProtectedData();
+  }, []);
+
   return (
     <div className="h-full flex flex-col">
       <DashboardsHeader
