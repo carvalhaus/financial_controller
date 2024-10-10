@@ -96,7 +96,7 @@ function CategorySelected({ params }) {
             className="rounded-md"
             style={{ height: `${windowDimensions.height - 520}px` }}
           >
-            <ExpensesTable expenses={category?.Expense} />
+            <ExpensesTable expenses={category?.Expense} fetchProtectedData={fetchProtectedData}/>
           </ScrollArea>
         </div>
       </div>

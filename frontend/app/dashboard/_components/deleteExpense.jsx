@@ -13,7 +13,31 @@ import Image from "next/image";
 import trash from "@/public/trash-x.svg";
 import { buttonVariants } from "@/components/ui/button";
 
-function DeleteExpense() {
+function DeleteExpense({ expense, fetchProtectedData }) {
+  async function onDelete() {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/expenses/expense/delete/${expense.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao deletar despesa!");
+      }
+
+      console.log("Categoria deletada com sucesso!");
+
+      fetchProtectedData();
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger className="h-full">
@@ -38,6 +62,7 @@ function DeleteExpense() {
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
             className={buttonVariants({ variant: "destructive" })}
+            onClick={onDelete}
           >
             Excluir
           </AlertDialogAction>

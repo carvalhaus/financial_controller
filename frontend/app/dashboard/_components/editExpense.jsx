@@ -4,18 +4,94 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import React from "react";
 
-function EditExpense({ expense }) {
+const editExpenseFormSchema = z.object({
+  name: z.string().min(4, { message: "Esse campo é obrigatório" }),
+  amount: z.coerce
+    .number()
+    .positive({ message: "O limite deve ser maior que zero" }),
+});
+
+function EditExpense({ expense, fetchProtectedData }) {
+  const [open, setOpen] = React.useState(false);
+
+  const editExpenseForm = useForm({
+    resolver: zodResolver(editExpenseFormSchema),
+    defaultValues: {
+      name: expense.name,
+      amount: expense.amount,
+    },
+  });
+
+  async function updateExpense(data) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/expenses/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar os dados!");
+      }
+
+      console.log("Dados atualizados com sucesso!");
+      return true;
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      return false;
+    }
+  }
+
+  async function onSubmit(values) {
+    const updateValue = { id: expense.id, ...values };
+    const updateComparable = {
+      id: expense.id,
+      name: expense.name,
+      amount: expense.amount,
+    };
+
+    const comparedData =
+      JSON.stringify(updateComparable) === JSON.stringify(updateValue);
+
+    if (!comparedData) {
+      console.log("Atualizando dados");
+
+      const isUpdated = await updateExpense(updateValue);
+
+      if (isUpdated) {
+        fetchProtectedData();
+      }
+    }
+
+    setOpen(false);
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="h-full">
         <Image
           src={edit}
@@ -31,19 +107,47 @@ function EditExpense({ expense }) {
           <DialogDescription>Edite a despesa selecionada</DialogDescription>
         </DialogHeader>
 
-        <form className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" defaultValue={expense?.name} />
-          </div>
+        <Form {...editExpenseForm}>
+          <form
+            onSubmit={editExpenseForm.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={editExpenseForm.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base">Nome da despesa</FormLabel>
+                  <FormControl>
+                    <Input placeholder="ex. Açaí" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <div className="flex flex-col gap-4">
-            <Label htmlFor="username">Valor</Label>
-            <Input id="username" defaultValue={expense?.amount} />
-          </div>
+            <FormField
+              control={editExpenseForm.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base">Valor da despesa</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="ex. R$ 20,00"
+                      type="number"
+                      min="1"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit">Editar</Button>
-        </form>
+            <Button className="w-full text-lg">Adicionar</Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

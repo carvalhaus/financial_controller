@@ -47,7 +47,10 @@ function Expenses() {
         </h3>
 
         <ScrollArea className="rounded-md">
-          <ExpensesTable expenses={expenses} />
+          <ExpensesTable
+            expenses={expenses}
+            fetchProtectedData={fetchProtectedData}
+          />
         </ScrollArea>
       </div>
     </div>

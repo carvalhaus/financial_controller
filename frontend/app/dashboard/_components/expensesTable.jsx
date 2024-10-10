@@ -11,7 +11,7 @@ import DeleteExpense from "./deleteExpense";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-export function ExpensesTable({ expenses }) {
+export function ExpensesTable({ expenses, fetchProtectedData }) {
   const pathname = usePathname();
 
   const isDashboard = pathname === "/dashboard";
@@ -70,9 +70,12 @@ export function ExpensesTable({ expenses }) {
               </TableCell>
               {isDashboard || (
                 <TableCell className="flex items-center justify-center gap-3 h-full align-middle">
-                  <EditExpense expense={expense} />
+                  <EditExpense
+                    expense={expense}
+                    fetchProtectedData={fetchProtectedData}
+                  />
 
-                  <DeleteExpense expense={expense} />
+                  <DeleteExpense expense={expense} fetchProtectedData={fetchProtectedData}/>
                 </TableCell>
               )}
             </TableRow>
