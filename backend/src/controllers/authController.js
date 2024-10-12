@@ -90,9 +90,7 @@ const googleOAuthHandler = async (req, res) => {
 
     res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
   } catch (error) {
-    console.error("OAuth Handler Error:", error.message);
-    res.status(500).json({ error: "Failed to fetch tokens" });
-    return res.redirect(process.env.FRONTEND_URL);
+    res.redirect(process.env.FRONTEND_URL);
   }
 };
 
