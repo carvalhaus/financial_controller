@@ -32,10 +32,12 @@ describe("Category Service Tests", () => {
   describe("createCategory", () => {
     it("should create a new category successfully with valid body", async () => {
       const validCategory = {
-        userId: "704223ef-6986-400e-9851-737f0d34976c",
+        id: "5d1bc189-a823-4327-9964-39ccc994416d",
         icon: "🙄",
         name: "Teste criar categoria",
         amount: 1600,
+        createdAt: "2024-10-12T19:29:29.575Z",
+        userId: "704223ef-6986-400e-9851-737f0d34976c",
       };
 
       prisma.category.findFirst.mockResolvedValue(null);
@@ -49,7 +51,7 @@ describe("Category Service Tests", () => {
         name: "Teste criar categoria",
         amount: 1600,
         icon: "🙄",
-        createdAt: expect.any(Date),
+        createdAt: "2024-10-12T19:29:29.575Z",
         userId: "704223ef-6986-400e-9851-737f0d34976c",
       });
     });
@@ -89,11 +91,11 @@ describe("Category Service Tests", () => {
       const result = await categoryService.getCategories(userId);
       expect(result).toEqual([
         {
-          id: expect.any(String),
+          id: "85ae01a9-bfda-45d0-9936-21b6891a4368",
           name: "Teste criar categoria",
           amount: 1600,
           icon: "🙄",
-          createdAt: expect.any(Date),
+          createdAt: "2024-10-12T19:30:43.102Z",
           userId: "704223ef-6986-400e-9851-737f0d34976c",
           Expense: [],
           totalSpent: 0,
@@ -104,7 +106,7 @@ describe("Category Service Tests", () => {
 
     it("should throw an error if no categories are found", async () => {
       const userId = "invalid_uuid";
-      prisma.category.findMany.mockResolvedValue(userId);
+      prisma.category.findMany.mockResolvedValue([]);
 
       await expect(categoryService.getCategories(userId)).rejects.toThrow(
         "Usuário não possui nenhuma categoria cadastrada!"
@@ -115,25 +117,28 @@ describe("Category Service Tests", () => {
   describe("getCategory", () => {
     it("should retrieve a category successfully", async () => {
       const id = "85ae01a9-bfda-45d0-9936-21b6891a4368";
-      prisma.category.findUnique.mockResolvedValue(id);
 
-      const result = await categoryService.getCategory(id);
-      expect(result).toEqual({
-        id: expect.any(String),
+      const categoryData = {
+        id: "85ae01a9-bfda-45d0-9936-21b6891a4368",
         name: "Teste criar categoria",
         amount: 1600,
         icon: "🙄",
-        createdAt: expect.any(Date),
+        createdAt: new Date(), // Using new Date() for createdAt
         userId: "704223ef-6986-400e-9851-737f0d34976c",
         Expense: [],
         totalSpent: 0,
         totalExpenses: 0,
-      });
+      };
+
+      prisma.category.findUnique.mockResolvedValue(categoryData);
+
+      const result = await categoryService.getCategory(id);
+      expect(result).toEqual(categoryData);
     });
 
     it("should throw an error if category is not found", async () => {
       const userId = "invalid_uuid";
-      prisma.category.findUnique.mockResolvedValue(userId);
+      prisma.category.findUnique.mockResolvedValue(null);
 
       await expect(categoryService.getCategory(userId)).rejects.toThrow(
         "Categoria não cadastrada!"

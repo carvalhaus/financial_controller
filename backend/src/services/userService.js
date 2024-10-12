@@ -2,75 +2,79 @@ const prisma = require("../config/prismaClient");
 
 const userService = {
   getUser: async (userId) => {
-    const existingUser = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        username: true,
-        birthday: true,
-        expenses: {
-          take: 10,
-          orderBy: {
-            createdAt: "desc",
+    try {
+      const existingUser = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          username: true,
+          birthday: true,
+          expenses: {
+            take: 10,
+            orderBy: {
+              createdAt: "desc",
+            },
+            select: {
+              id: true,
+              name: true,
+              amount: true,
+              createdAt: true,
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
           },
-          select: {
-            id: true,
-            name: true,
-            amount: true,
-            createdAt: true,
-            category: {
-              select: {
-                id: true,
-                name: true,
+          categories: {
+            take: 3,
+            orderBy: {
+              createdAt: "desc",
+            },
+            select: {
+              id: true,
+              name: true,
+              createdAt: true,
+              amount: true,
+              icon: true,
+              _count: {
+                select: { Expense: true },
+              },
+              Expense: {
+                select: {
+                  amount: true,
+                },
               },
             },
           },
         },
-        categories: {
-          take: 3,
-          orderBy: {
-            createdAt: "desc",
-          },
-          select: {
-            id: true,
-            name: true,
-            createdAt: true,
-            amount: true,
-            icon: true,
-            _count: {
-              select: { Expense: true },
-            },
-            Expense: {
-              select: {
-                amount: true,
-              },
-            },
-          },
-        },
-      },
-    });
+      });
 
-    if (!existingUser) {
-      throw new Error("Usuário não cadastrado!");
-    }
+      if (!existingUser) {
+        throw new Error("Usuário não cadastrado!");
+      }
 
-    const categoriesWithTotals = existingUser.categories.map((category) => {
-      const totalSpent = category.Expense.reduce(
-        (total, expense) => total + expense.amount,
-        0
-      );
+      const categoriesWithTotals = existingUser.categories.map((category) => {
+        const totalSpent = category.Expense.reduce(
+          (total, expense) => total + expense.amount,
+          0
+        );
+        return {
+          ...category,
+          totalSpent,
+        };
+      });
+
       return {
-        ...category,
-        totalSpent,
+        ...existingUser,
+        categories: categoriesWithTotals,
       };
-    });
-
-    return {
-      ...existingUser,
-      categories: categoriesWithTotals,
-    };
+    } catch (error) {
+      throw new Error(error.message);
+    }
   },
 
   updateUser: async (userData) => {
@@ -109,8 +113,7 @@ const userService = {
 
       return updatedUser;
     } catch (error) {
-      console.error("Erro ao atualizar usuário:", error.message);
-      throw error;
+      throw new Error(error.message);
     }
   },
 };

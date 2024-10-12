@@ -49,19 +49,14 @@ const expenseService = {
 
       return expenses;
     } catch (error) {
-      console.error("Erro ao buscar despesas:", error);
       throw new Error(error.message);
     }
   },
 
   updateExpense: async (expense) => {
     try {
-      const { id, name, amount } = expense;
-
-      const existingExpense = prisma.expense.findUnique({
-        where: {
-          id,
-        },
+      const existingExpense = await prisma.expense.findUnique({
+        where: { id: expense.id },
       });
 
       if (!existingExpense) {
@@ -70,12 +65,12 @@ const expenseService = {
 
       const fieldsToUpdate = {};
 
-      if (name && name !== existingExpense.name) {
-        fieldsToUpdate.name = name;
+      if (expense.name && expense.name !== existingExpense.name) {
+        fieldsToUpdate.name = expense.name;
       }
 
-      if (amount && amount !== existingExpense.amount) {
-        fieldsToUpdate.amount = amount;
+      if (expense.amount && expense.amount !== existingExpense.amount) {
+        fieldsToUpdate.amount = expense.amount;
       }
 
       if (Object.keys(fieldsToUpdate).length === 0) {
@@ -84,13 +79,12 @@ const expenseService = {
       }
 
       const updatedExpense = await prisma.expense.update({
-        where: { id },
+        where: { id: expense.id },
         data: fieldsToUpdate,
       });
 
       return updatedExpense;
     } catch (error) {
-      console.error("Erro ao atualizar despesas:", error);
       throw new Error(error.message);
     }
   },
@@ -113,7 +107,6 @@ const expenseService = {
         },
       });
     } catch (error) {
-      console.error("Erro ao deletar despesas:", error);
       throw new Error(error.message);
     }
   },
