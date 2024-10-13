@@ -57,7 +57,40 @@ const userService = {
         throw new Error("Usuário não cadastrado!");
       }
 
+      const allCategories = await prisma.category.findMany({
+        where: { userId },
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          id: true,
+          name: true,
+          createdAt: true,
+          amount: true,
+          icon: true,
+          _count: {
+            select: { Expense: true },
+          },
+          Expense: {
+            select: {
+              amount: true,
+            },
+          },
+        },
+      });
+
       const categoriesWithTotals = existingUser.categories.map((category) => {
+        const totalSpent = category.Expense.reduce(
+          (total, expense) => total + expense.amount,
+          0
+        );
+        return {
+          ...category,
+          totalSpent,
+        };
+      });
+
+      const allCategoriesWithTotals = allCategories.map((category) => {
         const totalSpent = category.Expense.reduce(
           (total, expense) => total + expense.amount,
           0
@@ -71,6 +104,7 @@ const userService = {
       return {
         ...existingUser,
         categories: categoriesWithTotals,
+        allCategories: allCategoriesWithTotals,
       };
     } catch (error) {
       throw new Error(error.message);

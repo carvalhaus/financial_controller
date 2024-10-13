@@ -6,11 +6,11 @@ function ActivitiesSection({ userData }) {
     return <div>Loading...</div>;
   }
 
-  const { categories, expenses } = userData;
+  const { categories, allCategories } = userData;
 
   return (
     <section className="flex flex-col items-center lg:flex-row gap-4 py-5 md:justify-evenly w-full">
-      <ExpensesChart categories={categories}/>
+      <ExpensesChart allCategories={allCategories} />
 
       <LastCategories categories={categories} />
     </section>

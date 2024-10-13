@@ -1,6 +1,17 @@
 const prisma = require("../config/prismaClient");
 require("dotenv").config();
 
+const defaultCategories = [
+  { name: "Habitação", amount: 0, icon: "🏠" },
+  { name: "Alimentação", amount: 0, icon: "🍔" },
+  { name: "Transporte", amount: 0, icon: "🚗" },
+  { name: "Saúde", amount: 0, icon: "💊" },
+  { name: "Educação", amount: 0, icon: "📚" },
+  { name: "Lazer", amount: 0, icon: "🎉" },
+  { name: "Vestuário", amount: 0, icon: "👗" },
+  { name: "Poupança e Investimento", amount: 0, icon: "💰" },
+];
+
 const authService = {
   async registerUser(email, hashedPassword) {
     let username = this._extractUsername(email);
@@ -19,6 +30,9 @@ const authService = {
           email,
           password: hashedPassword,
           username,
+          categories: {
+            create: defaultCategories,
+          },
         },
       });
 
@@ -119,18 +133,31 @@ const googleOAuthService = {
 
       if (existingUser) {
         delete existingUser.password;
-        return existingUser;
+        return await prisma.user.update({
+          where: { email },
+          data: {
+            name,
+            username,
+          },
+        });
       }
 
       if (await this._isUsernameTaken(username)) {
         username = this._generateUniqueUsername(username);
       }
 
-      return await prisma.user.upsert({
-        where: { email },
-        update: { name, username },
-        create: { email, name, username },
+      const newUser = await prisma.user.create({
+        data: {
+          email,
+          name,
+          username,
+          categories: {
+            create: defaultCategories,
+          },
+        },
       });
+
+      return newUser;
     } catch (error) {
       throw new Error("Failed to upsert Google user.");
     }

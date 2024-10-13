@@ -8,7 +8,10 @@ jest.mock("@prisma/client", () => {
     user: {
       findUnique: jest.fn(),
       create: jest.fn(),
-      upsert: jest.fn(),
+      update: jest.fn(),
+    },
+    category: {
+      createMany: jest.fn(),
     },
   };
 
@@ -27,22 +30,36 @@ describe("Auth Service Tests", () => {
   const hashedPassword = "hashedpassword";
   const username = email.split("@")[0];
 
+  const defaultCategories = [
+    { name: "Habitação", amount: 0, icon: "🏠" },
+    { name: "Alimentação", amount: 0, icon: "🍔" },
+    { name: "Transporte", amount: 0, icon: "🚗" },
+    { name: "Saúde", amount: 0, icon: "💊" },
+    { name: "Educação", amount: 0, icon: "📚" },
+    { name: "Lazer", amount: 0, icon: "🎉" },
+    { name: "Vestuário", amount: 0, icon: "👗" },
+    { name: "Poupança e Investimento", amount: 0, icon: "💰" },
+  ];
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   describe("User Registration", () => {
-    it("should register a new user successfully", async () => {
+    it("should register a new user successfully and create default categories", async () => {
       prisma.user.findUnique.mockResolvedValueOnce(null); // Email not registered
       prisma.user.findUnique.mockResolvedValueOnce(null); // Username not taken
-      prisma.user.create.mockResolvedValue({
+
+      const userResponse = {
         birthday: null,
         createdAt: new Date(),
         email,
         id: "1314ed39-8fd6-4324-a4f8-deed5ca4170f",
         name: null,
         username,
-      });
+      };
+
+      prisma.user.create.mockResolvedValue(userResponse);
 
       const result = await authService.registerUser(email, hashedPassword);
 
@@ -53,6 +70,23 @@ describe("Auth Service Tests", () => {
         id: expect.any(String),
         name: null,
         username,
+      });
+
+      expect(prisma.user.create).toHaveBeenCalledWith({
+        data: {
+          email,
+          password: hashedPassword,
+          username,
+          categories: {
+            create: expect.arrayContaining(
+              defaultCategories.map((category) => ({
+                amount: category.amount,
+                icon: category.icon,
+                name: category.name,
+              }))
+            ),
+          },
+        },
       });
     });
 
@@ -150,22 +184,61 @@ describe("Auth Service Tests", () => {
         const name = "Test User";
         const username = "test";
 
-        prisma.user.findUnique.mockResolvedValue(null); // User not found
-        prisma.user.upsert.mockResolvedValue({ email, name, username });
+        prisma.user.findUnique.mockResolvedValue(null); // No existing user
+
+        const userResponse = {
+          id: "1314ed39-8fd6-4324-a4f8-deed5ca4170f",
+          email,
+          name,
+          username,
+          birthday: null,
+          createdAt: new Date(),
+        };
+
+        prisma.user.create.mockResolvedValue(userResponse);
 
         const result = await googleOAuthService.upsertGoogleUser(email, name);
-        expect(result).toEqual({ email, name, username });
+
+        const expectedUserResponse = {
+          id: "1314ed39-8fd6-4324-a4f8-deed5ca4170f",
+          email,
+          name,
+          username,
+          birthday: null,
+          createdAt: expect.any(Date),
+        };
+
+        expect(result).toEqual(expectedUserResponse);
+
+        // Verify that categories are being created but not part of the final response
+        expect(prisma.user.create).toHaveBeenCalledWith({
+          data: {
+            email,
+            name,
+            username,
+            categories: {
+              create: defaultCategories,
+            },
+          },
+        });
       });
 
       it("should return existing user if already registered", async () => {
         const email = "test@example.com";
-        const name = "Test User";
-        const existingUser = { email, name, username: "test" };
+        const name = "Existing User";
+        const existingUser = {
+          id: "existing-user-id",
+          email,
+          name,
+          username: "test",
+        };
 
-        prisma.user.findUnique.mockResolvedValue(existingUser); // User exists
+        prisma.user.findUnique.mockResolvedValue(existingUser);
+        prisma.user.update.mockResolvedValue(existingUser);
 
         const result = await googleOAuthService.upsertGoogleUser(email, name);
-        expect(result).toEqual(existingUser);
+
+        expect(result).toEqual(existingUser); // Ensure it returns the existing user
       });
     });
   });

@@ -7,6 +7,9 @@ jest.mock("@prisma/client", () => {
       findUnique: jest.fn(),
       update: jest.fn(),
     },
+    category: {
+      findMany: jest.fn(),
+    },
   };
 
   return {
@@ -42,7 +45,27 @@ describe("userService", () => {
         ],
       };
 
+      const mockCategories = [
+        {
+          id: "cat2",
+          name: "Transport",
+          createdAt: new Date(),
+          amount: 50,
+          icon: "🚗",
+          Expense: [{ amount: 10 }, { amount: 20 }],
+        },
+        {
+          id: "cat3",
+          name: "Entertainment",
+          createdAt: new Date(),
+          amount: 150,
+          icon: "🎉",
+          Expense: [{ amount: 50 }, { amount: 60 }],
+        },
+      ];
+
       prisma.user.findUnique.mockResolvedValue(mockUser);
+      prisma.category.findMany.mockResolvedValue(mockCategories);
 
       const result = await userService.getUser("1");
 
@@ -54,9 +77,26 @@ describe("userService", () => {
             totalSpent: 50,
           },
         ],
+        allCategories: [
+          {
+            ...mockCategories[0],
+            totalSpent: 30,
+          },
+          {
+            ...mockCategories[1],
+            totalSpent: 110,
+          },
+        ],
       });
       expect(prisma.user.findUnique).toHaveBeenCalledWith({
         where: { id: "1" },
+        select: expect.any(Object),
+      });
+      expect(prisma.category.findMany).toHaveBeenCalledWith({
+        where: { userId: "1" },
+        orderBy: {
+          createdAt: "desc",
+        },
         select: expect.any(Object),
       });
     });
