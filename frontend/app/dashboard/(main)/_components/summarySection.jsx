@@ -14,16 +14,16 @@ function SummarySection({ userData }) {
     return <div>Loading...</div>;
   }
 
-  const { categories, expenses } = userData;
+  const { allCategories } = userData;
 
-  const categoriesLength = categories ? categories.length : "0";
+  const categoriesLength = allCategories ? allCategories.length : "0";
 
   const totalBudget = realCurrency(
-    categories.reduce((sum, expense) => sum + expense.amount, 0)
+    allCategories.reduce((sum, expense) => sum + expense.amount, 0)
   );
 
   const totalExpended = realCurrency(
-    expenses.reduce((sum, expense) => sum + expense.amount, 0)
+    allCategories.reduce((sum, expense) => sum + expense.totalSpent, 0)
   );
 
   const cardIcons = [
