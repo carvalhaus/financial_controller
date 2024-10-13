@@ -81,6 +81,18 @@ describe("Category Controller", () => {
     expect(response.body.categories).toEqual(mockCategories);
   });
 
+  test("getCategories - error", async () => {
+    const errorMessage = "User not found!";
+    categoryService.getCategories.mockRejectedValue(new Error(errorMessage));
+
+    const response = await request(app).get(
+      "/categories/65d46de0-4b62-42d5-b7f2-737f8b5265a4"
+    );
+
+    expect(response.status).toBe(500);
+    expect(response.body.error).toBe(errorMessage);
+  });
+
   test("getCategory - success", async () => {
     const mockCategory = {
       id: "49f40095-28c0-4600-af9a-96773fbb3e7f",
@@ -177,8 +189,9 @@ describe("Category Controller", () => {
 
     categoryService.deleteCategory.mockResolvedValue(mockCategory);
 
+    const categoryId = "49f40095-28c0-4600-af9a-96773fbb3e7f"; // This is the id to delete
     const response = await request(app).delete(
-      "/categories/category/delete/49f40095-28c0-4600-af9a-96773fbb3e7f"
+      `/categories/category/delete/${categoryId}`
     );
 
     expect(response.status).toBe(200);
@@ -186,16 +199,16 @@ describe("Category Controller", () => {
     expect(response.body.category).toEqual(mockCategory);
   });
 
-  test("deleteCategory - error", async () => {
-    categoryService.deleteCategory.mockRejectedValue(
-      new Error("Delete failed")
-    );
+  test("deleteCategory - error when id does not exist", async () => {
+    const errorMessage = "Categoria não encontrada!";
+    categoryService.deleteCategory.mockRejectedValue(new Error(errorMessage));
 
+    const categoryId = "non-existing-id"; // Use a non-existing id for error test
     const response = await request(app).delete(
-      "/categories/category/delete/49f40095-28c0-4600-af9a-96773fbb3e7f"
+      `/categories/category/delete/${categoryId}`
     );
 
     expect(response.status).toBe(500);
-    expect(response.body.error).toBe("Delete failed");
+    expect(response.body.error).toBe("Categoria não encontrada!");
   });
 });
