@@ -58,7 +58,6 @@ function EditExpense({ expense, fetchProtectedData }) {
         throw new Error("Erro ao atualizar os dados!");
       }
 
-      console.log("Dados atualizados com sucesso!");
       return true;
     } catch (error) {
       console.error("Erro na requisição:", error);
@@ -78,8 +77,6 @@ function EditExpense({ expense, fetchProtectedData }) {
       JSON.stringify(updateComparable) === JSON.stringify(updateValue);
 
     if (!comparedData) {
-      console.log("Atualizando dados");
-
       const isUpdated = await updateExpense(updateValue);
 
       if (isUpdated) {

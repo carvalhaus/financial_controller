@@ -19,7 +19,6 @@ function Expenses() {
         `${BASE_URL}/api/protected`
       );
 
-      console.log("GET EXPENSES");
       const expensesResponse = await fetchWithCredentials(
         `${BASE_URL}/api/expenses/${protectedData.userId}`
       );

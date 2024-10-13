@@ -31,7 +31,7 @@ function HeaderMenu() {
             </SheetContent >
         </Sheet >
 
-    )
+    );
 }
 
 export default HeaderMenu;

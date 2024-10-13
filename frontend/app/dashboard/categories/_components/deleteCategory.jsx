@@ -31,8 +31,6 @@ function DeleteCategory({ id }) {
         throw new Error("Erro ao deletar a categoria!");
       }
 
-      console.log("Categoria deletada com sucesso!");
-
       router.push("/dashboard/categories");
     } catch (error) {
       console.error("Erro na requisição:", error);

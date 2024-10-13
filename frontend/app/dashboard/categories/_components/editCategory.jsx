@@ -71,7 +71,6 @@ function EditCategory({ category, fetchProtectedData }) {
         throw new Error("Erro ao atualizar os dados!");
       }
 
-      console.log("Dados atualizados com sucesso!");
       return true;
     } catch (error) {
       console.error("Erro na requisição:", error);
@@ -93,8 +92,6 @@ function EditCategory({ category, fetchProtectedData }) {
       JSON.stringify(categoryComparable) === JSON.stringify(updatedValues);
 
     if (!comparedData) {
-      console.log("Atualizando dados");
-
       const isUpdated = await updateCategory(updatedValues);
 
       if (isUpdated) {

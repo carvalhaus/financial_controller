@@ -80,8 +80,6 @@ function AddCategory({ fetchProtectedData }) {
         throw new Error("Erro ao criar categoria.");
       }
 
-      console.log("Categoria criada com sucesso!");
-
       addCategoryForm.reset();
       setOpen(false);
 

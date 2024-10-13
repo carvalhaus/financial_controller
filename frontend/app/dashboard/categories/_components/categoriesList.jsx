@@ -19,7 +19,6 @@ function CategoriesList() {
         `${BASE_URL}/api/protected`
       );
 
-      console.log("GET CATEGORIES");
       const categoriesResponse = await fetchWithCredentials(
         `${BASE_URL}/api/categories/${protectedData.userId}`
       );

@@ -29,8 +29,6 @@ function UserInfo() {
       );
 
       if (response.ok) {
-        console.log("Cookies cleared successfully!");
-
         router.push("/login");
       } else {
         console.error("Error clearing cookies.");

@@ -8,7 +8,7 @@ function WebPageLayout({ children }) {
             <Header />
             {children}
             <Footer />
-        </div>)
+        </div>);
 }
 
 export default WebPageLayout;

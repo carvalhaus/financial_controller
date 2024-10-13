@@ -30,8 +30,6 @@ function DeleteExpense({ expense, fetchProtectedData }) {
         throw new Error("Erro ao deletar despesa!");
       }
 
-      console.log("Categoria deletada com sucesso!");
-
       fetchProtectedData();
     } catch (error) {
       console.error("Erro na requisição:", error);

@@ -57,7 +57,7 @@ function CategorySelected({ params }) {
   return (
     <div className="h-full flex flex-col">
       <DashboardsHeader
-        title={`Categorias`}
+        title={"Categorias"}
         category={category?.name}
         subtitle={"Destalhes da categoria selecionada"}
       />

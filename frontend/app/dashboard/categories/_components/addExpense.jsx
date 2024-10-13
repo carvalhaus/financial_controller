@@ -62,8 +62,6 @@ function AddExpense({ id, fetchProtectedData }) {
         throw new Error("Erro ao criar despesa.");
       }
 
-      console.log("Despesa criada com sucesso!");
-
       createExpenseForm.reset();
       fetchProtectedData();
     } catch (error) {

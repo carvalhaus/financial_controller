@@ -84,7 +84,6 @@ function SettingsModal({ userData }) {
         throw new Error("Erro ao atualizar os dados!");
       }
 
-      console.log("Dados atualizados com sucesso!");
       return true;
     } catch (error) {
       console.error("Erro na requisição:", error);
@@ -107,8 +106,6 @@ function SettingsModal({ userData }) {
 
     if (!comparedData) {
       const updatedData = { id, username, name, birthday: formattedBirthday };
-
-      console.log("Atualizando dados");
 
       const isUpdated = await updateUser(updatedData);
 
