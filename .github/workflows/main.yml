@@ -26,5 +26,6 @@ jobs:
         working-directory: ./backend
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PUBLIC_KEY: ${{secrets.PUBLIC_KEY}}
           FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
         run: npm test
