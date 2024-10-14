@@ -22,11 +22,9 @@ jobs:
         working-directory: ./backend
         run: npm install
 
-      - name: Set environment variables
-        run: |
-          echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}"
-          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}"
-        
       - name: Run backend tests
         working-directory: ./backend
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
         run: npm test
