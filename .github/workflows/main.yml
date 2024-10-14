@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  say-hello:
+  build-backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,5 +18,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Say Hello
-        run: echo "Hello, World!"
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm install
