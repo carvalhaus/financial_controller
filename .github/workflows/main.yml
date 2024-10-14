@@ -24,8 +24,8 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}" >> $GITHUB_ENV
-          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> $GITHUB_ENV
+          echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}"
+          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}"
         
       - name: Run backend tests
         working-directory: ./backend
