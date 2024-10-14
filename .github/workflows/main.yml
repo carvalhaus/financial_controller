@@ -9,6 +9,21 @@ jobs:
   build-backend:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd "pg_isready -U test_user"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,6 +36,10 @@ jobs:
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm install
+
+      - name: Set database environment variables
+        run: |
+          echo "DATABASE_URL=postgres://test_user:test_password@localhost:5432/test_db" >> $GITHUB_ENV
         
       - name: Run backend tests
         working-directory: ./backend
