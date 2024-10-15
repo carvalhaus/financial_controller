@@ -47,7 +47,7 @@ jobs:
           file: ./backend/Dockerfile
           push: true
           tags:
-            carvalhaus/treasure_backend:v1
+            carvalhaus/treasure_backend:${{github.run_number}}
 
       - name: Build and push Docker Frontend images
         # You may pin to the exact commit or the version.
@@ -58,4 +58,4 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags:
-            carvalhaus/treasure_frontend:v1
+            carvalhaus/treasure_frontend:${{github.run_number}}
