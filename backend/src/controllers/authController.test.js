@@ -118,12 +118,12 @@ describe("googleOAuthHandler", () => {
     });
 
     googleOAuthService.getGoogleUser.mockResolvedValue({
-      email: "ooliveira.joaop@gmail.com",
+      email: `${process.env.GOOGLE_EMAIL_TEST}`,
       name: "Google User",
     });
 
     googleOAuthService.upsertGoogleUser.mockResolvedValue({
-      email: "ooliveira.joaop@gmail.com",
+      email: `${process.env.GOOGLE_EMAIL_TEST}`,
     });
 
     createJwt.mockReturnValue("mockedJwtToken");
@@ -145,11 +145,11 @@ describe("googleOAuthHandler", () => {
       access_token: "mockedAccessToken",
     });
     expect(googleOAuthService.upsertGoogleUser).toHaveBeenCalledWith(
-      "ooliveira.joaop@gmail.com",
+      `${process.env.GOOGLE_EMAIL_TEST}`,
       "Google User"
     );
     expect(createJwt).toHaveBeenCalledWith({
-      email: "ooliveira.joaop@gmail.com",
+      email: `${process.env.GOOGLE_EMAIL_TEST}`,
     });
   });
 
