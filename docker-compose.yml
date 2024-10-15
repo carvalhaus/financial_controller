@@ -1,0 +1,44 @@
+services:
+  treasure_db:
+    image: postgres:16-alpine
+    container_name: treasure_db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - treasure-network
+    volumes:
+      - treasure-volume:/var/lib/postgresql/data
+
+  treasure_backend:
+    build: ./backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - 3001:3001
+    networks:
+      - treasure-network
+    depends_on:
+      - treasure_db
+    command: >
+      sh -c "npx prisma migrate dev &&
+             npm run start"
+
+  treasure_frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    networks:
+      - treasure-network
+    depends_on:
+      - treasure_backend
+
+networks:
+  treasure-network:
+    driver: bridge
+
+volumes:
+  treasure-volume:

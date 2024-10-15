@@ -43,7 +43,9 @@ function UserInfo() {
       <DropdownMenuTrigger className="flex items-center justify-center px-[6px] gap-2 focus-visible:outline-none">
         <Avatar className="size-10">
           <AvatarFallback className="bg-softGray size-10 text-base">
-            {userData?.name[0]}
+            {userData && userData.name && userData.name.length > 0
+              ? userData.name[0]
+              : "?"}
           </AvatarFallback>
         </Avatar>
         <h4 className="text-2xl font-semibold tracking-tight">
