@@ -16,6 +16,7 @@ function CategorySelected({ params }) {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+
   const [category, setCategory] = react.useState(null);
 
   const { fetchWithCredentials } = useApi();
@@ -62,7 +63,7 @@ function CategorySelected({ params }) {
         subtitle={"Destalhes da categoria selecionada"}
       />
 
-      <div className="flex-1 flex flex-col p-4 gap-10 lg:gap-0">
+      <div className="flex-1 flex flex-col p-4 gap-10 lg:gap-0 overflow-y-scroll">
         <div className="flex flex-col lg:flex-row gap-6 md:gap-10 lg:gap-20 items-center justify-center">
           <div className="flex flex-col items-center gap-4 w-full lg:w-1/3">
             <CategoryCard
@@ -96,7 +97,10 @@ function CategorySelected({ params }) {
             className="rounded-md"
             style={{ height: `${windowDimensions.height - 520}px` }}
           >
-            <ExpensesTable expenses={category?.Expense} fetchProtectedData={fetchProtectedData}/>
+            <ExpensesTable
+              expenses={category?.Expense}
+              fetchProtectedData={fetchProtectedData}
+            />
           </ScrollArea>
         </div>
       </div>

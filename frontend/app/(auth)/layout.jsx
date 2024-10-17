@@ -64,7 +64,10 @@ function AuthLayout({ children }) {
                 <span className="w-2/5 h-[2px] bg-primary rounded-full"></span>
               </div>
 
-              <Link href={getGoogleOAuthUlrl()} className="flex items-center">
+              <Link
+                href={getGoogleOAuthUlrl()}
+                className="flex items-center w-full"
+              >
                 <Button className="w-full" variant="outline">
                   <IconBrandGoogleFilled className="mr-3 w-6 h-6" />
                   Continue com o Google

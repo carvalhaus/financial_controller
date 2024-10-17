@@ -40,7 +40,7 @@ function UserInfo() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center justify-center px-[6px] gap-2 focus-visible:outline-none">
+      <DropdownMenuTrigger className="flex items-center justify-center px-[6px] gap-2 focus-visible:outline-none truncate w-48">
         <Avatar className="size-10">
           <AvatarFallback className="bg-softGray size-10 text-base">
             {userData && userData.name && userData.name.length > 0
@@ -48,7 +48,7 @@ function UserInfo() {
               : "?"}
           </AvatarFallback>
         </Avatar>
-        <h4 className="text-2xl font-semibold tracking-tight">
+        <h4 className="text-2xl font-semibold tracking-tight truncate">
           {userData?.username}
         </h4>
       </DropdownMenuTrigger>

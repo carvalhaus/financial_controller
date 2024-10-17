@@ -9,7 +9,7 @@ function ActivitiesSection({ userData }) {
   const { categories, allCategories } = userData;
 
   return (
-    <section className="flex flex-col items-center lg:flex-row gap-4 py-5 md:justify-evenly w-full">
+    <section className="flex flex-col items-center lg:flex-row gap-4 py-5 lg:py-8 md:justify-evenly w-full">
       <ExpensesChart allCategories={allCategories} />
 
       <LastCategories categories={categories} />

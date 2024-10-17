@@ -23,17 +23,17 @@ function MainDashboard() {
         subtitle={"Vamos controlar suas despesas?"}
       />
 
-      <div className="flex-1 flex flex-col items-center md:p-4 px-4 pb-4">
+      <div className="flex-1 flex flex-col items-center md:p-4 px-4 pb-4 overflow-y-scroll">
         <SummarySection userData={userData} />
 
         <ActivitiesSection userData={userData} />
 
-        <div className="flex flex-col items-center justify-center pt-5 w-full">
+        <div className="flex flex-col items-center justify-center pt-5 lg:pt-0 w-full">
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-3">
             Últimos lançamentos
           </h3>
 
-          <ScrollArea className="w-full h-60 rounded-md">
+          <ScrollArea className="w-full h-52 rounded-md">
             <ExpensesTable expenses={userData?.expenses} />
           </ScrollArea>
         </div>

@@ -27,14 +27,14 @@ services:
       sh -c "npx prisma migrate dev &&
              npm run start"
 
-  treasure_frontend:
-    build: ./frontend
-    ports:
-      - 3000:3000
-    networks:
-      - treasure-network
-    depends_on:
-      - treasure_backend
+  # treasure_frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - treasure-network
+  #   depends_on:
+  #     - treasure_backend
 
 networks:
   treasure-network:

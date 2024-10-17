@@ -45,7 +45,7 @@ function SummarySection({ userData }) {
   ];
 
   return (
-    <section className="py-5 flex flex-col md:flex-row gap-4 w-3/4 md:w-full justify-center lg:justify-evenly">
+    <section className="py-5 lg:py-0 flex flex-col md:flex-row gap-4 w-3/4 md:w-full justify-center lg:justify-evenly">
       {cardIcons.map((card, index) => (
         <SummaryCard
           key={index}
