@@ -20,11 +20,15 @@ const expenseController = {
       const expenses = await expenseService.getAllExpenses(userId);
 
       res.status(200).json({
-        message: "Despesas recebidas com sucesso!",
+        message:
+          expenses.length > 0
+            ? "Despesas recebidas com sucesso!"
+            : "Nenhuma despesa cadastrada.",
         expenses,
       });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      const statusCode = error.statusCode || 500;
+      res.status(statusCode).json({ error: error.message });
     }
   },
 

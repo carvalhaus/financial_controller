@@ -58,7 +58,7 @@ describe("Expense Service", () => {
       prisma.category.findUnique.mockResolvedValue(null);
 
       await expect(expenseService.createExpense(expenseData)).rejects.toThrow(
-        "Categoria não encontrada!"
+        "Despesa não encontrada!"
       );
     });
   });
@@ -90,12 +90,11 @@ describe("Expense Service", () => {
       });
     });
 
-    it("should throw an error if no expenses found", async () => {
+    it("should return an empty array if no expenses found", async () => {
       prisma.expense.findMany.mockResolvedValue([]);
 
-      await expect(expenseService.getAllExpenses(userId)).rejects.toThrow(
-        "Usuário não possui nenhuma despesa cadastrada!"
-      );
+      const result = await expenseService.getAllExpenses(userId);
+      expect(result).toEqual([]);
     });
   });
 

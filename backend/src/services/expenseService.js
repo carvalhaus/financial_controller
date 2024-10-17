@@ -10,7 +10,7 @@ const expenseService = {
     });
 
     if (!category) {
-      throw new Error("Categoria não encontrada!");
+      throw new Error("Despesa não encontrada!");
     }
 
     const userId = category.userId;
@@ -42,10 +42,6 @@ const expenseService = {
           },
         },
       });
-
-      if (expenses.length === 0) {
-        throw new Error("Usuário não possui nenhuma despesa cadastrada!");
-      }
 
       return expenses;
     } catch (error) {
