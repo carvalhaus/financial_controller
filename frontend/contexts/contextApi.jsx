@@ -14,10 +14,23 @@ function ContextApiProvider({ children }) {
 
   const BASE_URL = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}`;
 
+  const getCookie = (name) => {
+    const cookieValue = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith(`${name}=`))
+      ?.split("=")[1];
+    return cookieValue ? decodeURIComponent(cookieValue) : null;
+  };
+
   const fetchWithCredentials = async (url) => {
+    const token = getCookie("token");
+
     const response = await fetch(url, {
       method: "GET",
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     if (!response.ok) {
