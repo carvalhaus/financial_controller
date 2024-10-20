@@ -12,9 +12,9 @@ import React from "react";
 function MainDashboard() {
   const { userData, fetchProtectedData } = useApi();
 
-  React.useEffect(() => {
-    fetchProtectedData();
-  }, [fetchProtectedData]);
+  // );React.useEffect(() => {
+  //   fetchProtectedData();
+  // }, [fetchProtectedData]
 
   return (
     <div className="h-full flex flex-col">
