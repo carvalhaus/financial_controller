@@ -29,6 +29,8 @@ function ContextApiProvider({ children }) {
 
   const fetchProtectedData = async () => {
     try {
+      console.log(BASE_URL);
+
       const protectedData = await fetchWithCredentials(
         `${BASE_URL}/api/protected`
       );
