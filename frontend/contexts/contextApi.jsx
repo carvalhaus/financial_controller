@@ -34,7 +34,7 @@ function ContextApiProvider({ children }) {
       );
 
       const userDataResponse = await fetchWithCredentials(
-        `https://financial-controller-xck7.onrender.com}/api/users/${protectedData.userId}`
+        `https://financial-controller-xck7.onrender.com/api/users/${protectedData.userId}`
       );
 
       setUserData(userDataResponse.userData);
