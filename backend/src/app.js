@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "*",
+    origin: "https://treasurefinances.vercel.app",
     credentials: true,
   })
 );
