@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -19,31 +18,71 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { useApi } from "@/contexts/contextApi";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const invitationFormSchema = z.object({
-  email: z.string().email({ message: "Esse campo é obrigatório" }),
-  message: z.string().min(10, { message: "Esse campo é obrigatório" }),
+  email: z
+    .string({
+      required_error: "O e-mail é obrigatório.",
+    })
+    .email({ message: "O e-mail deve ser válido." }),
 });
 
 function FriendInvitation() {
+  const [open, setOpen] = React.useState(false);
+  const { userData } = useApi();
+
   const invitationForm = useForm({
     resolver: zodResolver(invitationFormSchema),
     defaultValues: {
       email: "",
-      message: "",
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  async function invitFriend(data) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/invit-friend`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao enviar convite!");
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      return false;
+    }
+  }
+
+  async function onSubmit(values) {
+    const combinedData = {
+      ...values,
+      name: userData.name,
+    };
+
+    const inviteSent = await invitFriend(combinedData);
+
+    if (inviteSent) {
+      invitationForm.reset();
+      setOpen(false);
+    }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="w-full text-base" size="lg">
           Convide um amigo
@@ -82,26 +121,7 @@ function FriendInvitation() {
               )}
             />
 
-            <FormField
-              control={invitationForm.control}
-              name="message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base">Mensagem</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Digite uma mensagem para seu amigo aqui."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <DialogClose asChild>
-              <Button className="w-full text-lg">Enviar convite</Button>
-            </DialogClose>
+            <Button className="w-full text-lg">Enviar convite</Button>
           </form>
         </Form>
       </DialogContent>

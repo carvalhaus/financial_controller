@@ -35,7 +35,6 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "jest-mock-extended": "^4.0.0-beta1",
-    "nodemailer-mock": "^2.0.6",
     "nodemon": "^3.1.4",
     "supertest": "^7.0.0"
   }
