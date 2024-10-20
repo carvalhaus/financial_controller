@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "npx nodemon src/app.js",
     "start": "npx prisma migrate deploy && node src/app.js",
-    "test": "jest",
-    "vercel-build": "npx prisma migrate deploy"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
