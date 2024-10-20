@@ -61,7 +61,7 @@ function UserInfo() {
     <DropdownMenu>
       <DropdownMenuTrigger
         ref={triggerRef}
-        className="flex items-center justify-center px-[6px] gap-2 focus-visible:outline-none truncate w-48 focus:border-2 focus:rounded-sm focus:border-red-600 focus:animate-pulse "
+        className="flex items-center justify-center px-[6px] gap-2 focus-visible:outline-none truncate w-48 focus:border-2 focus:rounded-sm focus:border-red-800 focus:animate-pulse "
       >
         <Avatar className="size-10">
           <AvatarFallback className="bg-softGray size-10 text-base">
