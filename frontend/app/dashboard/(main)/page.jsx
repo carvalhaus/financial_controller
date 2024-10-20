@@ -14,7 +14,7 @@ function MainDashboard() {
 
   React.useEffect(() => {
     fetchProtectedData();
-  }, []);
+  }, [fetchProtectedData]);
 
   return (
     <div className="h-full flex flex-col">
