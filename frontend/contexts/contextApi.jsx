@@ -30,11 +30,11 @@ function ContextApiProvider({ children }) {
   const fetchProtectedData = async () => {
     try {
       const protectedData = await fetchWithCredentials(
-        `${BASE_URL}/api/protected`
+        `https://financial-controller-xck7.onrender.com/api/protected`
       );
 
       const userDataResponse = await fetchWithCredentials(
-        `${BASE_URL}/api/users/${protectedData.userId}`
+        `https://financial-controller-xck7.onrender.com}/api/users/${protectedData.userId}`
       );
 
       setUserData(userDataResponse.userData);
