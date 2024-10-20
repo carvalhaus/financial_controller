@@ -9,11 +9,11 @@ const nextConfig = {
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://your-frontend-domain.com",
-          }, // Change this to your domain
+            value: "https://financial-controller-xck7.onrender.com",
+          },
           {
             key: "Access-Control-Allow-Methods",
-            value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+            value: "GET,DELETE,PATCH,POST,PUT",
           },
           {
             key: "Access-Control-Allow-Headers",
