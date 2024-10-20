@@ -19,6 +19,8 @@ app.use(
   cors({
     origin: "https://treasurefinances.vercel.app",
     credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["X-CSRF-Token", "X-Requested-With", "Content-Type"],
   })
 );
 
