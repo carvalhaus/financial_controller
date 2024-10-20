@@ -35,7 +35,8 @@ function Login() {
   });
 
   async function onSubmit(values) {
-    const endpoint = `https://financial-controller-xck7.onrender.com/api/sessions/login`;
+    const endpoint =
+      "https://financial-controller-xck7.onrender.com/api/sessions/login";
 
     try {
       const response = await fetch(endpoint, {
