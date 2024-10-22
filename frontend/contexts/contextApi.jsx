@@ -12,7 +12,14 @@ function ContextApiProvider({ children }) {
 
   const router = useRouter();
 
-  const BASE_URL = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}`;
+  const BASE_URL = process.env.NEXT_PUBLIC_SERVER_ENDPOINT;
+
+  const getCookie = (name) => {
+    const match = document.cookie.match(
+      new RegExp("(^| )" + name + "=([^;]+)")
+    );
+    return match ? match[2] : null;
+  };
 
   const fetchWithCredentials = async (url) => {
     const token = getCookie("token");
