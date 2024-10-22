@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
 
-      localStorage.setItem("token", data.token);
+      sessionStorage.setItem("token", data.token);
 
       router.push("/dashboard");
     } catch (error) {

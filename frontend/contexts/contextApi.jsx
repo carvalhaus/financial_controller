@@ -15,7 +15,7 @@ function ContextApiProvider({ children }) {
   const BASE_URL = process.env.NEXT_PUBLIC_SERVER_ENDPOINT;
 
   const fetchWithCredentials = async (url) => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     console.log("Token being sent in header:", token);
 
