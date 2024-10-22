@@ -15,16 +15,10 @@ const authController = {
 
       const token = createJwt(newUser);
 
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: false,
-        maxAge: 3600000,
-        sameSite: "none",
-      });
-
       res.status(201).json({
         message: "Usuário registrado com sucesso!",
         user: { email: newUser.email },
+        token,
       });
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -44,13 +38,6 @@ const authController = {
       }
 
       const token = createJwt(user);
-
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: false,
-        maxAge: 3600000,
-        sameSite: "none",
-      });
 
       res.status(200).json({
         message: "Login bem-sucedido!",
@@ -81,14 +68,11 @@ const googleOAuthHandler = async (req, res) => {
 
     const token = createJwt(user);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 3600000,
-      sameSite: "none",
+    res.status(200).json({
+      message: "Login bem-sucedido!",
+      user: { email: user.email },
+      token,
     });
-
-    res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
   } catch (error) {
     res.redirect(process.env.FRONTEND_URL);
   }

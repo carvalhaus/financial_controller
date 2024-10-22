@@ -30,12 +30,6 @@ app.use(categoryRoutes);
 app.use(expenseRoutes);
 app.use(invitFriendRoutes);
 
-app.post("/api/clear-cookies", (req, res) => {
-  res.clearCookie("token");
-
-  res.status(200).json({ message: "Cookies cleared successfully" });
-});
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

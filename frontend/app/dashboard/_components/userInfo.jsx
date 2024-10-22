@@ -21,24 +21,9 @@ function UserInfo() {
   const { toast } = useToast();
   const triggerRef = React.useRef(null);
 
-  async function handleLogout() {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/clear-cookies`,
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
-
-      if (response.ok) {
-        router.push("/login");
-      } else {
-        console.error("Error clearing cookies.");
-      }
-    } catch (error) {
-      console.error("Error in request:", error);
-    }
+  function handleLogout() {
+    localStorage.removeItem("token");
+    router.push("/login");
   }
 
   const requiredFields = ["name", "birthday"];

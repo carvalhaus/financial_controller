@@ -20,7 +20,7 @@ app.get("/auth/google/callback", googleOAuthHandler);
 
 describe("authController", () => {
   describe("register", () => {
-    it("should register a user and set a JWT cookie", async () => {
+    it("should register a user and return a JWT token", async () => {
       const mockUser = { email: "test@example.com" };
       hashPassword.mockResolvedValue("hashedPassword");
       authService.registerUser.mockResolvedValue(mockUser);
@@ -33,7 +33,7 @@ describe("authController", () => {
       expect(res.status).toBe(201);
       expect(res.body.message).toBe("Usuário registrado com sucesso!");
       expect(res.body.user.email).toBe("test@example.com");
-      expect(res.headers["set-cookie"]).toBeDefined();
+      expect(res.body.token).toBe("mockedJwtToken"); // Check for returned token
       expect(hashPassword).toHaveBeenCalledWith("password123");
       expect(authService.registerUser).toHaveBeenCalledWith(
         "test@example.com",
@@ -55,7 +55,7 @@ describe("authController", () => {
   });
 
   describe("login", () => {
-    it("should log in a user and set a JWT cookie", async () => {
+    it("should log in a user and return a JWT token", async () => {
       const mockUser = {
         email: "test@example.com",
         password: "hashedPassword",
@@ -71,8 +71,7 @@ describe("authController", () => {
       expect(res.status).toBe(200);
       expect(res.body.message).toBe("Login bem-sucedido!");
       expect(res.body.user.email).toBe("test@example.com");
-      expect(res.body.token).toBe("mockedJwtToken");
-      expect(res.headers["set-cookie"]).toBeDefined();
+      expect(res.body.token).toBe("mockedJwtToken"); // Check for returned token
       expect(authService.loginUser).toHaveBeenCalledWith("test@example.com");
       expect(bcrypt.compare).toHaveBeenCalledWith(
         "password123",
@@ -111,7 +110,8 @@ describe("authController", () => {
 });
 
 describe("googleOAuthHandler", () => {
-  it("should handle Google OAuth login and redirect to dashboard", async () => {
+  it("should handle Google OAuth login and return user data", async () => {
+    // Mocking service responses
     googleOAuthService.getGoogleOAuthTokens.mockResolvedValue({
       id_token: "mockedIdToken",
       access_token: "mockedAccessToken",
@@ -132,11 +132,13 @@ describe("googleOAuthHandler", () => {
       .get("/auth/google/callback")
       .query({ code: "mockedCode" });
 
-    expect(res.status).toBe(302); // 302 is the status code for redirection
-    expect(res.headers["set-cookie"]).toBeDefined();
-    expect(res.headers["location"]).toBe(
-      `${process.env.FRONTEND_URL}/dashboard`
-    );
+    // Check for successful login response
+    expect(res.status).toBe(200); // Now expecting 200 OK
+    expect(res.body.message).toBe("Login bem-sucedido!");
+    expect(res.body.user.email).toBe(`${process.env.GOOGLE_EMAIL_TEST}`);
+    expect(res.body.token).toBe("mockedJwtToken");
+
+    // Ensure services were called correctly
     expect(googleOAuthService.getGoogleOAuthTokens).toHaveBeenCalledWith({
       code: "mockedCode",
     });
@@ -153,7 +155,7 @@ describe("googleOAuthHandler", () => {
     });
   });
 
-  it("should return 500 if OAuth flow fails", async () => {
+  it("should redirect to frontend URL on failure", async () => {
     googleOAuthService.getGoogleOAuthTokens.mockRejectedValue(
       new Error("Failed to fetch tokens")
     );
@@ -162,7 +164,7 @@ describe("googleOAuthHandler", () => {
       .get("/auth/google/callback")
       .query({ code: "invalidCode" });
 
-    expect(res.status).toBe(302);
+    expect(res.status).toBe(302); // Expecting redirection on failure
     expect(res.headers["location"]).toBe(process.env.FRONTEND_URL);
   });
 });

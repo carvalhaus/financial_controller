@@ -10,10 +10,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/authContext";
 import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -23,7 +23,7 @@ const loginFormSchema = z.object({
 });
 
 function Login() {
-  const router = useRouter();
+  const { login } = useAuth();
   const { toast } = useToast();
 
   const loginForm = useForm({
@@ -34,35 +34,15 @@ function Login() {
     },
   });
 
-  async function onSubmit(values) {
-    const endpoint = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/sessions/login`;
-
+  const onSubmit = async (values) => {
     try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Enviar cookies
-        body: JSON.stringify(values),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        router.push("/dashboard");
-      } else {
-        toast({
-          variant: "destructive",
-          title: data.error,
-        });
-      }
+      await login(values);
     } catch (err) {
       toast({
-        title: err,
+        title: err.message || "An unexpected error occurred.",
       });
     }
-  }
+  };
 
   return (
     <div className="flex flex-col gap-6 w-full text-center">
