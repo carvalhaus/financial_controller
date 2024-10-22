@@ -15,8 +15,13 @@ function ContextApiProvider({ children }) {
   const BASE_URL = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}`;
 
   const fetchWithCredentials = async (url) => {
+    const token = getCookie("token");
+
     const response = await fetch(url, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
 
@@ -30,11 +35,11 @@ function ContextApiProvider({ children }) {
   const fetchProtectedData = async () => {
     try {
       const protectedData = await fetchWithCredentials(
-        `https://financial-controller-xck7.onrender.com/api/protected`
+        `${BASE_URL}/api/protected`
       );
 
       const userDataResponse = await fetchWithCredentials(
-        `https://financial-controller-xck7.onrender.com/api/users/${protectedData.userId}`
+        `${BASE_URL}/api/users/${protectedData.userId}`
       );
 
       setUserData(userDataResponse.userData);
