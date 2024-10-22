@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const authenticateJWT = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.headers.authorization?.split(" ")[1];
 
   console.log("Token received:", token);
 
