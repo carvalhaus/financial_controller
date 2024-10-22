@@ -23,11 +23,6 @@ function ContextApiProvider({ children }) {
   const fetchWithCredentials = async (url) => {
     const token = getCookie("token");
 
-    if (!token) {
-      console.log("Token not found, retrying...");
-      return null;
-    }
-
     console.log("Token being sent in header:", token);
 
     const response = await fetch(url, {
@@ -46,33 +41,18 @@ function ContextApiProvider({ children }) {
   };
 
   const fetchProtectedData = async () => {
-    let tokenAvailable = false;
-    let attempts = 0;
-
-    while (!tokenAvailable && attempts < 5) {
+    try {
       const protectedData = await fetchWithCredentials(
         `${BASE_URL}/api/protected`
       );
 
-      if (protectedData) {
-        const userDataResponse = await fetchWithCredentials(
-          `${BASE_URL}/api/users/${protectedData.userId}`
-        );
+      const userDataResponse = await fetchWithCredentials(
+        `${BASE_URL}/api/users/${protectedData.userId}`
+      );
 
-        if (userDataResponse) {
-          setUserData(userDataResponse.userData);
-          tokenAvailable = true;
-        }
-      }
-
-      if (!tokenAvailable) {
-        attempts += 1;
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second before retrying
-      }
-    }
-
-    if (!tokenAvailable) {
-      console.error("Erro: não foi possível recuperar o token.");
+      setUserData(userDataResponse.userData);
+    } catch (err) {
+      console.error("Erro inesperado:", err);
       router.push("/login");
     }
   };
