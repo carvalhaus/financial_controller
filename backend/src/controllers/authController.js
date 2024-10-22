@@ -19,7 +19,7 @@ const authController = {
         httpOnly: true,
         secure: false,
         maxAge: 3600000,
-        sameSite: "strict",
+        sameSite: "none",
       });
 
       res.status(201).json({
@@ -49,7 +49,7 @@ const authController = {
         httpOnly: true,
         secure: false,
         maxAge: 3600000,
-        sameSite: "strict",
+        sameSite: "none",
       });
 
       res.status(200).json({
@@ -85,7 +85,7 @@ const googleOAuthHandler = async (req, res) => {
       httpOnly: true,
       secure: false,
       maxAge: 3600000,
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
