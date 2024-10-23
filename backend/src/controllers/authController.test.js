@@ -110,8 +110,7 @@ describe("authController", () => {
 });
 
 describe("googleOAuthHandler", () => {
-  it("should handle Google OAuth login and return user data", async () => {
-    // Mocking service responses
+  it("should handle Google OAuth login and redirect with user token", async () => {
     googleOAuthService.getGoogleOAuthTokens.mockResolvedValue({
       id_token: "mockedIdToken",
       access_token: "mockedAccessToken",
@@ -132,13 +131,11 @@ describe("googleOAuthHandler", () => {
       .get("/auth/google/callback")
       .query({ code: "mockedCode" });
 
-    // Check for successful login response
-    expect(res.status).toBe(200); // Now expecting 200 OK
-    expect(res.body.message).toBe("Login bem-sucedido!");
-    expect(res.body.user.email).toBe(`${process.env.GOOGLE_EMAIL_TEST}`);
-    expect(res.body.token).toBe("mockedJwtToken");
+    expect(res.status).toBe(302);
+    expect(res.headers.location).toBe(
+      `${process.env.FRONTEND_URL}/oauth/callback?token=mockedJwtToken`
+    );
 
-    // Ensure services were called correctly
     expect(googleOAuthService.getGoogleOAuthTokens).toHaveBeenCalledWith({
       code: "mockedCode",
     });
