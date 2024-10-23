@@ -11,9 +11,10 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
+  const BASE_URL = process.env.NEXT_PUBLIC_SERVER_ENDPOINT;
 
   const login = async (credentials) => {
-    const endpoint = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/sessions/login`;
+    const endpoint = `${BASE_URL}/api/sessions/login`;
 
     try {
       const response = await fetch(endpoint, {
@@ -37,6 +38,33 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Login error:", error.message);
       throw error;
+    }
+  };
+
+  const register = async (values) => {
+    const endpoint = `${BASE_URL}/api/sessions/register`;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        sessionStorage.setItem("token", data.token);
+        router.push("/dashboard");
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (err) {
+      console.error("Registration error:", err);
+      throw new Error(err.message);
     }
   };
 

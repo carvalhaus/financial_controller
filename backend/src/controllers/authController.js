@@ -68,11 +68,7 @@ const googleOAuthHandler = async (req, res) => {
 
     const token = createJwt(user);
 
-    res.status(200).json({
-      message: "Login bem-sucedido!",
-      user: { email: user.email },
-      token,
-    });
+    res.redirect(`${process.env.FRONTEND_URL}/oauth/callback?token=${token}`);
   } catch (error) {
     res.redirect(process.env.FRONTEND_URL);
   }
