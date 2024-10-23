@@ -17,8 +17,6 @@ function ContextApiProvider({ children }) {
   const fetchWithCredentials = async (url) => {
     const token = sessionStorage.getItem("token");
 
-    console.log("Token being sent in header:", token);
-
     const response = await fetch(url, {
       method: "GET",
       headers: {
