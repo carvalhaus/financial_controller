@@ -1,4 +1,3 @@
-// authService.test.js
 const fetch = require("./__mocks__/fetch");
 const { authService, googleOAuthService } = require("./authService");
 const { PrismaClient } = require("@prisma/client");
