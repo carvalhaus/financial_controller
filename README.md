@@ -2,6 +2,10 @@
 
 Treasure é um aplicativo de controle financeiro projetado para ajudar os usuários a gerenciar suas finanças de forma eficaz e segura. Este projeto foi desenvolvido como TCC (Trabalho de Conclusão de Curso) do curso de Pós-graduação em Desenvolvimento Full Stack pela PUCRS (Pontifícia Universidade Católica do Rio Grande do Sul).
 
+## Acesse o Projeto
+
+Você pode acessar o projeto "Treasure" através do seguinte link: [Treasure - Controle Financeiro](https://treasurefinances.vercel.app/).
+
 ## Índice
 
 - [Funcionalidades](#funcionalidades)
