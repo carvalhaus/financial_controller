@@ -1,6 +1,7 @@
 "use client";
 
 import SummaryCard from "./summaryCard";
+import SummaryCardSkeleton from "./summaryCardSkeleton";
 
 function SummarySection({ userData }) {
   function realCurrency(value) {
@@ -10,8 +11,16 @@ function SummarySection({ userData }) {
     }).format(value);
   }
 
+  const skeletons = [1, 2, 3];
+
   if (!userData) {
-    return <div>Loading...</div>;
+    return (
+      <section className="py-5 lg:py-0 flex flex-col md:flex-row gap-4 w-3/4 md:w-full justify-center lg:justify-evenly">
+        {skeletons.map((index) => (
+          <SummaryCardSkeleton />
+        ))}
+      </section>
+    );
   }
 
   const { allCategories } = userData;
