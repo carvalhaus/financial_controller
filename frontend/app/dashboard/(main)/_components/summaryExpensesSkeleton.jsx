@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function SummaryExpensesSkeleton() {
   return (
-    <div className="flex flex-col items-center justify-center pt-5 lg:pt-0 w-full">
+    <div className="flex flex-col items-center justify-center p-4 lg:pt-0 w-full mt-4">
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-3">
         Últimos lançamentos
       </h3>

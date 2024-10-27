@@ -5,6 +5,7 @@ import AddCategory from "./addCategory";
 
 import { useApi } from "@/contexts/contextApi";
 import react from "react";
+import CategoriesListSkeleton from "./categoriesListSkeleton";
 
 function CategoriesList() {
   const { fetchWithCredentials } = useApi();
@@ -33,6 +34,10 @@ function CategoriesList() {
   react.useEffect(() => {
     fetchProtectedData();
   }, []);
+
+  if (!categories) {
+    return <CategoriesListSkeleton />;
+  }
 
   return (
     <div className="flex-1 p-4 w-full overflow-y-scroll">
