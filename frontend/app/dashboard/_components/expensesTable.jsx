@@ -75,7 +75,10 @@ export function ExpensesTable({ expenses, fetchProtectedData }) {
                     fetchProtectedData={fetchProtectedData}
                   />
 
-                  <DeleteExpense expense={expense} fetchProtectedData={fetchProtectedData}/>
+                  <DeleteExpense
+                    expense={expense}
+                    fetchProtectedData={fetchProtectedData}
+                  />
                 </TableCell>
               )}
             </TableRow>
