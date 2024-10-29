@@ -6,7 +6,7 @@ Treasure é um aplicativo de controle financeiro projetado para ajudar os usuár
 
 Você pode acessar o projeto "Treasure" através do seguinte link: [Treasure - Controle Financeiro](https://treasurefinances.vercel.app/).
 
-![Demonstração do Treasure](https://img.youtube.com/vi/w3PKEWs9VHI/maxresdefault.jpg)](https://youtu.be/w3PKEWs9VHI)
+[![Demonstração do Treasure](https://img.youtube.com/vi/w3PKEWs9VHI/maxresdefault.jpg)](https://www.youtube.com/watch?v=w3PKEWs9VHI)
 
 ## Índice
 
